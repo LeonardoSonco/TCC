@@ -9,6 +9,7 @@ import PapersPage from "./pages/PapersPage";
 import ApiPage from "./pages/ApiPage";
 import DatasetPage from "./pages/DatasetPage";
 import AboutPage from "./pages/AboutPage";
+import ExecutionPage from "./pages/ExecutionPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/api" element={<ApiPage />}></Route>
         <Route path="/dataset" element={<DatasetPage />}></Route>
         <Route path="/papers" element={<PapersPage />}></Route>
+        <Route path="/training" element={<ExecutionPage />}></Route>
       </Routes>
 
       <Footer />

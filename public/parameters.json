@@ -1,0 +1,69 @@
+{
+    "Number Epochs": [{
+        "label": "Number Epochs",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Initializer Mean": [{
+        "label": "Initializer Mean",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Initializer Deviation": [{
+        "label": "Initializer Deviation",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+ 
+    "Training Algorithm": [{
+        "label": "Training Algorithm",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Activation Function": [{
+        "label": "Activation Function",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Dropout Decay rate G": [{
+        "label": "Dropout Decay rate G",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Dropout Decay rate D": [{
+        "label": "Dropout Decay rate D",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Dense Layer Sizes G": [{
+        "label": "Dense Layer Sizes G",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Dense Layer Sizes D": [{
+        "label": "Dense Layer Sizes D",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Verbosity": [{
+        "label": "Verbosity",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Save Models": [{
+        "label": "Save Models",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "K-Fold": [{
+        "label": "K-Fold",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }],
+    "Batch Size": [{
+        "label": "Batch Size",
+        "descritpion": "xxxxxxxxx",
+        "value": 0
+    }]
+
+}

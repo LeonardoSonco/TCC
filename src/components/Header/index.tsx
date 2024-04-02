@@ -222,7 +222,8 @@ export default function Header() {
         </header>
       ) : (
         <header className="flex justify-between px-16 py-4 items-center bg-gray_header">
-          <img src={Logo} alt="" className="w-40" />
+          <Link to="/training"> <img src={Logo} alt="" className="w-40" /></Link>
+         
 
           <ul className="flex items-center gap-10 font-medium">
             <Link
