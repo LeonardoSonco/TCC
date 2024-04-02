@@ -1,19 +1,27 @@
 //import StartedPage from "./pages/StartedPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import React from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-import ApiPage from "./pages/ApiPage/firstStep";
 import PapersPage from "./pages/PapersPage";
-
+import ApiPage from "./pages/ApiPage";
+import DatasetPage from "./pages/DatasetPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
     <>
-    <Header />
-    <PapersPage />
-    <Footer />
+      <Header />
+      <Routes>
+        <Route path="/about" element={<AboutPage />}></Route>
+        <Route path="/api" element={<ApiPage />}></Route>
+        <Route path="/dataset" element={<DatasetPage />}></Route>
+        <Route path="/papers" element={<PapersPage />}></Route>
+      </Routes>
+
+      <Footer />
     </>
   );
 }

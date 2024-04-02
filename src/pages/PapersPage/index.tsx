@@ -105,7 +105,7 @@ export default function PapersPage() {
           <>
             <nav className="col-span-2 flex justify-center max-mobile:hidden">
               <ul className="flex flex-col gap-6 ml-10">
-                <li className="font-bold cursor-pointer">AutoDroid</li>
+                <li className="font-bold cursor-pointer border-b-2">AutoDroid</li>
                 <li onClick={handleChangePaper("DroidArgumentor")} className="cursor-pointer">DroidArgumentor</li>
               </ul>
             </nav>
@@ -118,7 +118,7 @@ export default function PapersPage() {
             <nav className="col-span-2 flex justify-center max-mobile:hidden">
               <ul className="flex flex-col gap-6 ml-10">
                 <li onClick={handleChangePaper("AutoDroid")} className="cursor-pointer">AutoDroid</li>
-                <li className="font-bold cursor-pointer">DroidArgumentor</li>
+                <li className="font-bold cursor-pointer border-b-2">DroidArgumentor</li>
               </ul>
             </nav>
             <div className="col-span-5">

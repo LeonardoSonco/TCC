@@ -1,4 +1,4 @@
-export default function About() {
+export default function AboutPage() {
   return (
     <>
       <section className=" w-7/12 mx-auto mb-20  max-lg:w-9/12 max-lg:max-sm:w-11/12 max-sm:text-justify">

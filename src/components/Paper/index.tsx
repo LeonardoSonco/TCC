@@ -1,16 +1,17 @@
 import { MouseEventHandler, useState } from "react";
 import { Copy, FileText } from "react-feather";
 
-
-
-
 interface ChildProps {
-    bibtex: JSX.Element;
-    resume: string;
-    reference: string;
+  bibtex: JSX.Element;
+  resume: string;
+  reference: string;
 }
 
-const AutoDroidPaper: React.FC<ChildProps> = ({bibtex,resume,reference}) => {
+const AutoDroidPaper: React.FC<ChildProps> = ({
+  bibtex,
+  resume,
+  reference,
+}) => {
   const [type, setType] = useState("bibtex");
 
   function handleChangePaper(
@@ -18,8 +19,6 @@ const AutoDroidPaper: React.FC<ChildProps> = ({bibtex,resume,reference}) => {
   ): MouseEventHandler<HTMLSpanElement> {
     return function (event) {
       setType(change);
-
-     
     };
   }
 
@@ -30,45 +29,26 @@ const AutoDroidPaper: React.FC<ChildProps> = ({bibtex,resume,reference}) => {
           Artigos de pesquisa referentes ao AutoDroid{" "}
         </h3>
 
-        <p className="mb-2">
-          {reference}
-        </p>
+        <p className="mb-2">{reference}</p>
 
         <div className="flex items-center justify-between">
           <div className="border-t-2 border-gray mt-2 w-full ">
-            <div>
-              {type === "bibtex" ? (
-                <>
-                  <span
-                    onClick={handleChangePaper("bibtex")}
-                    className="cursor-pointer border-t-2 border-black  px-2 font-bold"
-                  >
-                    Bibtex
-                  </span>
-                  <span
-                    onClick={handleChangePaper("resumo")}
-                    className="cursor-pointer px-2"
-                  >
-                    Resumo
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span
-                    onClick={handleChangePaper("bibtex")}
-                    className="cursor-pointer  px-2"
-                  >
-                    Bibtex
-                  </span>
-                  <span
-                    onClick={handleChangePaper("resumo")}
-                    className="cursor-pointer border-t-2 border-black px-2 font-bold"
-                  >
-                    Resumo
-                  </span>
-                </>
-              )}
-            </div>
+            <span
+              onClick={handleChangePaper("bibtex")}
+              className={`cursor-pointer  px-2 ${
+                type === "bibtex" ? "font-bold border-t-2 border-black " : ""
+              } `}
+            >
+              Bibtex
+            </span>
+            <span
+              onClick={handleChangePaper("resumo")}
+              className={`cursor-pointer px-2 ${
+                type === "resumo" ? "font-bold border-t-2 border-black " : ""
+              }`}
+            >
+              Resumo
+            </span>
           </div>
           <FileText className="ml-4" />
         </div>
@@ -86,9 +66,7 @@ const AutoDroidPaper: React.FC<ChildProps> = ({bibtex,resume,reference}) => {
         ) : (
           <>
             <div className="p-2 mt-4">
-              <p className="text-justify">
-                {resume}
-              </p>
+              <p className="text-justify">{resume}</p>
             </div>
           </>
         )}
