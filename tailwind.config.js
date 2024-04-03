@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}",'node_modules/flowbite-react/lib/esm/**/*.js'],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -10,9 +10,11 @@ module.exports = {
         "black_button" : "#001A1A",
       },
       boxShadow:{
-        "shadowBox" : "0px 0px 13px 6px rgba(0,0,0,0.1);"
+        "shadowBox" : "0px 4px 15px 5px rgba(0,0,0,0.1);"
+        
       },
       screens:{
+        'max-sm+' : {'max': '750px'},
         'max-sm': {'max': '600px'},
         'max-lg': {'max': '1024px'},
         'max-mobile': {'max': '964px'},
@@ -20,6 +22,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('flowbite/plugin')
+   
   ],
 };

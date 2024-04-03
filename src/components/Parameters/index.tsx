@@ -1,6 +1,9 @@
 import { Info, Plus, Minus } from "react-feather";
 import { useState } from "react";
 
+import style from "./index.module.css"
+
+
 interface ParameterComponentProps {
   label: string;
   onChange: (value: number) => void;
@@ -33,16 +36,16 @@ const ParametersComponent: React.FC<ParameterComponentProps> = ({
 
   return (
     <>
-      <div className="flex items-center">
+      <div className={`flex items-center py-1 ${style.size}`}>
         <Info
           size={20}
           color="#FFFFFF"
-          fill="black"
+          fill="#001A1A"
           className="font-bold"
           strokeWidth={2.5}
         />
         <h4 className="mr-3 px-1 font-bold">{label}</h4>
-        <div className="flex items-center border-2 border-gray rounded-md">
+        <div className={`flex items-center border-2 border-gray rounded-md `}>
           <button onClick={decreaseValue} className="px-1">
             <Minus size={14} />
           </button>
@@ -53,7 +56,7 @@ const ParametersComponent: React.FC<ParameterComponentProps> = ({
             onChange={(e) => handleInputChange(parseInt(e.target.value))}
             className="border-none  w-14 h-6 text-center"
           />
-          <button onClick={increaseValue} className="px-1">
+          <button onClick={increaseValue} className={`px-1`}>
             <Plus size={14} />
           </button>
         </div>
