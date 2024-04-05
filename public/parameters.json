@@ -1,69 +1,117 @@
 {
-    "Number Epochs": [{
+  "NumericParameters": {
+    "Number Epochs": [
+      {
         "label": "Number Epochs",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "O número total de épocas ( ciclos completos no conjunto de dados) durante o treinamento CGAN.",
         "value": 0
-    }],
-    "Initializer Mean": [{
+      }
+    ],
+    "Initializer Mean": [
+      {
         "label": "Initializer Mean",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "Representa a média dos valores usados para inicializar os pesos da rede neural, fornecendo um ponto de partida para o aprendizado. ",
         "value": 0
-    }],
-    "Initializer Deviation": [{
+      }
+    ],
+    "Initializer Deviation": [
+      {
         "label": "Initializer Deviation",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "Representa o desvio padrão dos valores usados para inicializar os pesos da rede neural, fornecendo um ponto de partida para o aprendizado.",
         "value": 0
-    }],
- 
-    "Training Algorithm": [{
-        "label": "Training Algorithm",
-        "descritpion": "xxxxxxxxx",
+      }
+    ],
+
+    "Dropout Decay rate G": [
+      {
+        "label": "Dropout Decay Rate G",
+        "descritpion": "Indica a taxa pela qual os neurônios são temporariamente 'desligados' durante o treinamento, ajudando a prevenir o overfitting. (Gerador)",
         "value": 0
-    }],
-    "Activation Function": [{
-        "label": "Activation Function",
-        "descritpion": "xxxxxxxxx",
+      }
+    ],
+    "Dropout Decay rate D": [
+      {
+        "label": "Dropout Decay Rate D",
+        "descritpion": "Indica a taxa pela qual os neurônios são temporariamente 'desligados' durante o treinamento, ajudando a prevenir o overfitting.(Discriminador)",
         "value": 0
-    }],
-    "Dropout Decay rate G": [{
-        "label": "Dropout Decay rate G",
-        "descritpion": "xxxxxxxxx",
-        "value": 0
-    }],
-    "Dropout Decay rate D": [{
-        "label": "Dropout Decay rate D",
-        "descritpion": "xxxxxxxxx",
-        "value": 0
-    }],
-    "Dense Layer Sizes G": [{
+      }
+    ],
+    "Dense Layer Sizes G": [
+      {
         "label": "Dense Layer Sizes G",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "Representam o número de neurônios em cada camada densa (totalmente conectada) do gerador.",
         "value": 0
-    }],
-    "Dense Layer Sizes D": [{
+      }
+    ],
+    "Dense Layer Sizes D": [
+      {
         "label": "Dense Layer Sizes D",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "Representam o número de neurônios em cada camada densa (totalmente conectada) do discriminador.",
         "value": 0
-    }],
-    "Verbosity": [{
-        "label": "Verbosity",
-        "descritpion": "xxxxxxxxx",
-        "value": 0
-    }],
-    "Save Models": [{
-        "label": "Save Models",
-        "descritpion": "xxxxxxxxx",
-        "value": 0
-    }],
-    "K-Fold": [{
+      }
+    ],
+    "K-Fold": [
+      {
         "label": "K-Fold",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "Refere-se ao número de divisões (dobras) que o conjunto de dados será dividido durante a validação cruzada, se essa técnica for aplicada.",
         "value": 0
-    }],
-    "Batch Size": [{
+      }
+    ],
+    "Batch Size": [
+      {
         "label": "Batch Size",
-        "descritpion": "xxxxxxxxx",
+        "descritpion": "Indica quantos exemplos de treinamento são considerados em cada iteração do processo de treinamento.",
         "value": 0
-    }]
+      }
+    ]
+  },
+  "StringParameters" :{
+    "Training Algorithm": [
+      {
+        "label": "Training Algorithm",
+        "descritpion": "Refere-se ao método específico usado para ajustar os pesos da rede neural durante o treinamento.",
+        "type": "Algorithm",
+        "options": [
+          {
+          "0" : "Adam",
+          "1" : "RMSprop",
+          "2" : "Adadelta"
+        }
+        ],
+        "chosenOption" : ""
+      }
+    ],
+    "Activation Function": [
+      {
+        "label": "Activation Function",
+        "descritpion": "É uma função matemática aplicada em cada neurônio de uma rede neural, que determina se ele deve ser ativado ou não, com base no input recebido.",
+        "type": "Function",
+        "options": [
+          {
+          "Teste" : "LeakyReLU",
+          "Teste1" : "ReLU",
+          "Teste2" : "PReLU"
+        }
+        ],
+        "chosenOption" : ""
+      }
+    ]
+  },
+  "BooleanParameters" : {
+    "Save Model": [
+      {
+        "label": "Save Model",
+        "descritpion": "Opção para salvar modelos treinados.",
+        "active": false
+      }
+    ],
+    "Verbosity": [
+      {
+        "label": "Verbosity",
+        "descritpion": "Refere-se ao nível de detalhe das informações de progresso exibidas durante o treinamento do modelo.",
+        "active": false
+      }
+    ]
+  }
 
 }
