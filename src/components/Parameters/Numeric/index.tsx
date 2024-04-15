@@ -1,5 +1,5 @@
 import { Info, Plus, Minus } from "react-feather";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import style from "../index.module.css";
@@ -7,42 +7,47 @@ import style from "../index.module.css";
 interface NumericTypeParametersProps {
   label: string;
   onChange: (value: number) => void;
-  descritpion: string;
+  description: string;
 }
 
 const NumericTypeParameters: React.FC<NumericTypeParametersProps> = ({
   label,
   onChange,
-  descritpion,
+  description,
 }) => {
   const [value, setValue] = useState<number>(0);
 
+  
   const handleInputChange = (newValue: number) => {
+    console.log(typeof(newValue))
     setValue(newValue);
-    onChange(value);
+    onChange(newValue);
   };
 
-  const decreaseValue = () => {
+  const decreaseValue = useCallback(() => {
     if (value > 0) {
       const newValue = value - 1;
       setValue(newValue);
-      onChange(value);
+      onChange(newValue);
     }
-  };
-
-  const increaseValue = () => {
+  }, [value,onChange]);
+  
+  const increaseValue = useCallback(() => {
     const newValue = value + 1;
     setValue(newValue);
-    onChange(value);
-  };
+    onChange(newValue);
+  }, [value,onChange]);
+  
 
   return (
     <>
-      <div className={`flex items-center py-1 ${style.size} justify-between max-xs:flex-col`}>
+      <div
+        className={`flex items-center py-1 ${style.size} justify-between max-xs:flex-col`}
+      >
         <div className="flex items-center">
           <Tooltip
             TransitionComponent={Zoom}
-            title={descritpion}
+            title={description}
             placement="top-start"
             arrow
           >

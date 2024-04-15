@@ -2,6 +2,8 @@ import React, { MouseEventHandler, useState } from "react";
 import FirstStep from "../../components/ApiPageComponents/FirstStep";
 import Parameters from "../../components/ApiPageComponents/Parameters";
 import Documentation from "../../components/ApiPageComponents/Documentation";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 export default function ApiPage() {
   const [rendering, setRendering] = useState("firststep");
@@ -32,6 +34,9 @@ export default function ApiPage() {
 
   return (
     <>
+    <Header />
+
+    
       <section className="mt-4">
         <div className="grid grid-cols-8 max-mobile:flex max-mobile:w-10/12 max-mobile:mx-auto">
           <nav className="col-span-2 flex justify-center max-mobile:hidden">
@@ -60,6 +65,7 @@ export default function ApiPage() {
           {contentRender}
         </div>
       </section>
+      <Footer />
     </>
   );
 }

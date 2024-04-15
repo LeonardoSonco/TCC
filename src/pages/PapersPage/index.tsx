@@ -1,6 +1,7 @@
 import { MouseEventHandler, useState } from "react";
 import AutoDroidPaper from "../../components/Paper";
-
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 const AutoDroidInfo = {
   bibtex: (
     <>
@@ -96,7 +97,8 @@ export default function PapersPage() {
     };
   }
 
-  return (
+  return (<>
+  <Header />
     <section className="mt-4">
       <div className="grid grid-cols-8 max-mobile:flex max-mobile:w-10/12 max-mobile:mx-auto">
         
@@ -128,5 +130,7 @@ export default function PapersPage() {
         )}
       </div>
     </section>
+    <Footer />
+    </>
   );
 }

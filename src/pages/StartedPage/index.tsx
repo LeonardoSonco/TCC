@@ -2,6 +2,7 @@ import logo from "../../assets/Logo.png";
 import github from "../../assets/GitHub.svg";
 
 import style from "./index.module.css";
+import { Link } from "react-router-dom";
 
 export default function StartedPage() {
   return (
@@ -14,10 +15,10 @@ export default function StartedPage() {
 
           <div className="text-white text-sm flex gap-5 max-sm:flex-col">
             <button className="bg-black_button rounded-3xl py-2 w-48">
-              Entenda o Autodroid
+              <Link to="/about">Entenda o Autodroid</Link>
             </button>
             <button className="bg-black_button rounded-3xl py-2 w-48">
-              Ambiente de execução
+              <Link to="/training">Ambiente de execução</Link>
             </button>
           </div>
 

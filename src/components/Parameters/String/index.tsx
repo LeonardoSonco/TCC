@@ -15,7 +15,7 @@ interface StringTypeParametersProps {
   type:string;
   onChange: (option: string) => void;
   descritpion: string;
-  options: string;
+  options: { [key: string]: string };
 }
 
 const StringTypeParameters: React.FC<StringTypeParametersProps> = ({
@@ -25,14 +25,14 @@ const StringTypeParameters: React.FC<StringTypeParametersProps> = ({
   descritpion,
   options,
 }) => {
-  const [chosenOption, setOption] = useState("");
-
+  const [chosenOption, setChosenOption] = useState("Default");
+  
   const handleChange = (event: SelectChangeEvent) => {
-    setOption(event.target.value);
-    onChange(chosenOption);
+    
+    setChosenOption(event.target.value);
+    onChange(event.target.value);
   };
 
-  console.log();
 
   return (
     <>
@@ -64,11 +64,11 @@ const StringTypeParameters: React.FC<StringTypeParametersProps> = ({
             label="Opções"
             onChange={handleChange}
           >
-            <MenuItem value="">
-              <em>None</em>
+            <MenuItem value="Default">
+              <em>Default</em>
             </MenuItem>
 
-            {Object.entries(options).map(([key, value]) => (
+            {options && Object.entries(options).map(([key, value]) => (
               <MenuItem key={key} value={key}>
                 {value}
               </MenuItem>

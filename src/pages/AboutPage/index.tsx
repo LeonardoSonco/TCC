@@ -1,6 +1,10 @@
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+
 export default function AboutPage() {
   return (
     <>
+    <Header />
       <section className=" w-7/12 mx-auto mb-20  max-lg:w-9/12 max-lg:max-sm:w-11/12 max-sm:text-justify">
         <div className="flex flex-col gap-4 ">
           <h3 className="font-bold text-xl max-sm:text-center">The AutoDroid</h3>
@@ -74,6 +78,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

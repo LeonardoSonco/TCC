@@ -16,16 +16,15 @@ const BooleanTypeParameters: React.FC<BooleanTypeParametersProps> = ({
   onChange,
   descritpion,
 }) => {
-  const [checked, setChecked] = useState(false);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-    onChange(true);
+    onChange(event.target.checked);
   };
 
   return (
     <>
-      <div className={`flex items-center py-1 ${style.size} justify-between max-xs:flex-col`}>
+      <div
+        className={`flex items-center py-1 ${style.size} justify-between max-xs:flex-col`}
+      >
         <div className="flex items-center">
           <Tooltip
             TransitionComponent={Zoom}

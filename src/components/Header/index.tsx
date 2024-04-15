@@ -4,7 +4,13 @@ import Logo from "../../assets/Logo.png";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+interface HeaderExecutionEnvironment {
+  isExecutionEnvironment?: boolean;
+}
+
+const Header: React.FC<HeaderExecutionEnvironment> = ({
+  isExecutionEnvironment = false,
+}) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [menuHamburguer, setMenuHamburguer] = useState(false);
   const [isAPISubmenuOpen, setIsAPISubmenuOpen] = useState(false);
@@ -49,6 +55,7 @@ export default function Header() {
       setMenuActive(change);
     };
   }
+
   return (
     <>
       {menuHamburguer ? (
@@ -93,79 +100,109 @@ export default function Header() {
                   </svg>
                 </div>
                 <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center min-h-[250px] ">
-                  <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ">
-                    Sobre
-                  </li>
-                  <li
-                    className={`border-b border-gray py-3 uppercase cursor-pointer font-bold w-full px-2 ${
-                      isAPISubmenuOpen
-                        ? "bg-strong_gray text-white"
-                        : "bg-white"
-                    } `}
-                    onClick={() => setIsAPISubmenuOpen(!isAPISubmenuOpen)}
-                  >
-                    <div className={`flex justify-between items-center px-2 `}>
-                      {isAPISubmenuOpen ? (
-                        <Play
-                          style={{ transform: "rotate(90deg)", fill: "white" }}
-                          size={13}
-                        />
-                      ) : (
-                        <Play
-                          style={{ transform: "rotate(180deg)", fill: "black" }}
-                          size={13}
-                        />
-                      )}{" "}
-                      <p>API</p>
-                    </div>
+                  {isExecutionEnvironment ? (
+                    <>
+                      <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ">
+                        <Link to={"/about"}>Entenda Autodroid</Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ">
+                        Sobre
+                      </li>
+                      <li
+                        className={`border-b border-gray py-3 uppercase cursor-pointer font-bold w-full px-2 ${
+                          isAPISubmenuOpen
+                            ? "bg-strong_gray text-white"
+                            : "bg-white"
+                        } `}
+                        onClick={() => setIsAPISubmenuOpen(!isAPISubmenuOpen)}
+                      >
+                        <div
+                          className={`flex justify-between items-center px-2 `}
+                        >
+                          {isAPISubmenuOpen ? (
+                            <Play
+                              style={{
+                                transform: "rotate(90deg)",
+                                fill: "white",
+                              }}
+                              size={13}
+                            />
+                          ) : (
+                            <Play
+                              style={{
+                                transform: "rotate(180deg)",
+                                fill: "black",
+                              }}
+                              size={13}
+                            />
+                          )}{" "}
+                          <p>API</p>
+                        </div>
 
-                    {isAPISubmenuOpen && (
-                      <ul className="submenu  text-sm font-medium text-left mt-2">
-                        <li onClick={() => setIsNavOpen(false)}>
-                          Primeiros passos
-                        </li>
-                        <li onClick={() => setIsNavOpen(false)}>Parâmetros</li>
-                        <li onClick={() => setIsNavOpen(false)}>
-                          Documentação
-                        </li>
-                      </ul>
-                    )}
-                  </li>
-                  <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2">
-                    Datasets
-                  </li>
-                  <li
-                    className={`border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ${
-                      isPaperSubmenuOpen
-                        ? "bg-strong_gray  text-white"
-                        : "bg-white"
-                    }`}
-                    onClick={() => setIsPaperSubmenuOpen(!isPaperSubmenuOpen)}
-                  >
-                    <div className="flex justify-between items-center px-2">
-                      {isPaperSubmenuOpen ? (
-                        <Play
-                          style={{ transform: "rotate(90deg)", fill: "white" }}
-                          size={13}
-                        />
-                      ) : (
-                        <Play
-                          style={{ transform: "rotate(180deg)", fill: "black" }}
-                          size={13}
-                        />
-                      )}{" "}
-                      <p>Papers</p>
-                    </div>
+                        {isAPISubmenuOpen && (
+                          <ul className="submenu  text-sm font-medium text-left mt-2">
+                            <li onClick={() => setIsNavOpen(false)}>
+                              Primeiros passos
+                            </li>
+                            <li onClick={() => setIsNavOpen(false)}>
+                              Parâmetros
+                            </li>
+                            <li onClick={() => setIsNavOpen(false)}>
+                              Documentação
+                            </li>
+                          </ul>
+                        )}
+                      </li>
+                      <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2">
+                        Datasets
+                      </li>
+                      <li
+                        className={`border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ${
+                          isPaperSubmenuOpen
+                            ? "bg-strong_gray  text-white"
+                            : "bg-white"
+                        }`}
+                        onClick={() =>
+                          setIsPaperSubmenuOpen(!isPaperSubmenuOpen)
+                        }
+                      >
+                        <div className="flex justify-between items-center px-2">
+                          {isPaperSubmenuOpen ? (
+                            <Play
+                              style={{
+                                transform: "rotate(90deg)",
+                                fill: "white",
+                              }}
+                              size={13}
+                            />
+                          ) : (
+                            <Play
+                              style={{
+                                transform: "rotate(180deg)",
+                                fill: "black",
+                              }}
+                              size={13}
+                            />
+                          )}{" "}
+                          <p>Papers</p>
+                        </div>
 
-                    {isPaperSubmenuOpen && (
-                      <ul className="submenu text-sm font-medium text-left">
-                        <li onClick={() => setIsNavOpen(false)}>AutoDroid</li>
-                        <li onClick={() => setIsNavOpen(false)}>
-                          DroidArgumentor
-                        </li>
-                      </ul>
-                    )}
-                  </li>
+                        {isPaperSubmenuOpen && (
+                          <ul className="submenu text-sm font-medium text-left">
+                            <li onClick={() => setIsNavOpen(false)}>
+                              AutoDroid
+                            </li>
+                            <li onClick={() => setIsNavOpen(false)}>
+                              DroidArgumentor
+                            </li>
+                          </ul>
+                        )}
+                      </li>
+                    </>
+                  )}
                 </ul>
                 <div className="overlay"></div>
                 <style>{`
@@ -222,48 +259,55 @@ export default function Header() {
         </header>
       ) : (
         <header className="flex justify-between px-16 py-4 items-center bg-gray_header">
-          <Link to="/training">
+          <Link to="/">
             {" "}
             <img src={Logo} alt="" className="w-40" />
           </Link>
 
           <ul className="flex items-center gap-10 font-medium">
-            <Link
-              to="/about"
-              onClick={handlerMenuActive("about")}
-              className={`${
-                menuActive === "about" ? "font-bold border-b-2" : ""
-              } `}
-            >
-              Sobre
-            </Link>
-            <Link
-              to="/api"
-              onClick={handlerMenuActive("api")}
-              className={`${
-                menuActive === "api" ? "font-bold border-b-2" : ""
-              } `}
-            >
-              API
-            </Link>
-            <Link
-              to="/dataset"
-              onClick={handlerMenuActive("dataset")}
-              className={`${
-                menuActive === "dataset" ? "font-bold border-b-2" : ""
-              } `}
-            >
-              Datasets
-            </Link>
-            <Link
-              to="/papers"
-              onClick={handlerMenuActive("papers")}
-              className={`${
-                menuActive === "papers" ? "font-bold border-b-2" : ""
-              } `}
-            >
-              Papers
-            </Link>
+            {isExecutionEnvironment ? (
+              <> </>
+            ) : (
+              <>
+                {" "}
+                <Link
+                  to="/about"
+                  onClick={handlerMenuActive("about")}
+                  className={`${
+                    menuActive === "about" ? "font-bold border-b-2" : ""
+                  } `}
+                >
+                  Sobre
+                </Link>
+                <Link
+                  to="/api"
+                  onClick={handlerMenuActive("api")}
+                  className={`${
+                    menuActive === "api" ? "font-bold border-b-2" : ""
+                  } `}
+                >
+                  API
+                </Link>
+                <Link
+                  to="/dataset"
+                  onClick={handlerMenuActive("dataset")}
+                  className={`${
+                    menuActive === "dataset" ? "font-bold border-b-2" : ""
+                  } `}
+                >
+                  Datasets
+                </Link>
+                <Link
+                  to="/papers"
+                  onClick={handlerMenuActive("papers")}
+                  className={`${
+                    menuActive === "papers" ? "font-bold border-b-2" : ""
+                  } `}
+                >
+                  Papers
+                </Link>
+              </>
+            )}
           </ul>
 
           <button className="bg-black_button py-2 w-44 rounded-sm text-white">
@@ -273,4 +317,6 @@ export default function Header() {
       )}
     </>
   );
-}
+};
+
+export default Header;
