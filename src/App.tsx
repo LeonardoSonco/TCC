@@ -12,6 +12,7 @@ import AboutPage from "./pages/AboutPage";
 import ExecutionPage from "./pages/ExecutionPage";
 import StartedPage from "./pages/StartedPage";
 import FirstStep from "./components/ApiPageComponents/FirstStep";
+import AutoDroidDemo from "./AutoDroidDemo";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/dataset" element={<DatasetPage />}></Route>
         <Route path="/papers" element={<PapersPage />}></Route>
         <Route path="/training" element={<ExecutionPage />}></Route>
-       
+        <Route path="/demo" element={< AutoDroidDemo />}></Route>
       </Routes>
 
      
