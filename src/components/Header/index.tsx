@@ -107,7 +107,7 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
                   {isExecutionEnvironment ? (
                     <>
                       <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ">
-                        <Link to={"/about"}>Entenda Autodroid</Link>
+                        <Link to={"/about"}>Entenda MalwareDatalab</Link>
                       </li>
                     </>
                   ) : (

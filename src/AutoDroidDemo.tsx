@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import CampanhaDemo from "./CampanhaDemo";
+
 
 
 
 const AutoDroidDemo = () => {
   const [processorId, setProcessorId] = useState("");
   const [selectedFile, setSelectedFile] = useState<any>("");
-
+  const [selectedCampaigns, setSelectedCampaigns] = useState("");
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -60,7 +62,7 @@ const AutoDroidDemo = () => {
       formData.append("description", "Teste de carregameto do dataset");
 
       const response: AxiosResponse<any> = await axios.post(
-        "/dataset",
+        "/api/dataset",
         formData,
         {
           headers: {
@@ -92,7 +94,7 @@ const AutoDroidDemo = () => {
     };
     try {
       const response: AxiosResponse<any> = await axios.post(
-        "/processing",
+        "/api/processing",
         requestData,
         {
           headers: {
@@ -112,7 +114,7 @@ const AutoDroidDemo = () => {
   const processingStatusToId = async () => {
     try {
       const response: AxiosResponse<any> = await axios.get(
-        `/processing/${processorId}`,
+        `/api/processing/${processorId}`,
         {
           headers: {
             Authorization: `Bearer 4faa2a6c-524c-4bac-a2be-2f7eba37ba65`,
@@ -128,7 +130,7 @@ const AutoDroidDemo = () => {
   const processingResult = async () => {
     try {
       //const processingId = "f3956812-eb9d-4af4-ac4c-86bbd89eae18"; // Substitua pelo ID do processamento
-      const response = await axios.get(`/processing/f3956812-eb9d-4af4-ac4c-86bbd89eae18`, {
+      const response = await axios.get(`/api/processing/f3956812-eb9d-4af4-ac4c-86bbd89eae18`, {
         headers: {
           Authorization: `Bearer 4faa2a6c-524c-4bac-a2be-2f7eba37ba65`,
         },
@@ -145,10 +147,12 @@ const AutoDroidDemo = () => {
     }
   };
 
+  console.log(selectedCampaigns)
+
   
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-      <h1 className="font-bold text-2xl">AutoDroid Demo</h1>
+      <h1 className="font-bold text-2xl">MalwareDatalab Demo</h1>
       <button
         className="border-2 bg-green-500 font-bold text-xl p-2"
         onClick={registerUser}
@@ -197,6 +201,9 @@ const AutoDroidDemo = () => {
       >
         6 - Obtenha os resultados do processamento
       </button>
+   
+      <CampanhaDemo />
+      
     </div>
   );
 };
