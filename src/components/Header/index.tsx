@@ -4,6 +4,7 @@ import Logo from "../../assets/Logo.png";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+
 interface HeaderExecutionEnvironment {
   isExecutionEnvironment?: boolean;
 }
@@ -16,6 +17,9 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
   const [isAPISubmenuOpen, setIsAPISubmenuOpen] = useState(false);
   const [isPaperSubmenuOpen, setIsPaperSubmenuOpen] = useState(false);
   const [menuActive, setMenuActive] = useState("about");
+
+
+ 
 
   useEffect(() => {
     const handleResize = () => {

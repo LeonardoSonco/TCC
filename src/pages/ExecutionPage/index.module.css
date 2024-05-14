@@ -1,0 +1,10 @@
+.size {
+    width: 310px;
+  }
+  
+  @media screen and (max-width: 660px) {
+    .size {
+      width: 80vw;
+    }
+  }
+  

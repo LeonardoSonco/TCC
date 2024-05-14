@@ -3,8 +3,12 @@ import github from "../../assets/GitHub.svg";
 
 import style from "./index.module.css";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
+
 
 export default function StartedPage() {
+
+  const { setCurrentUserId } = useUserContext();
   return (
     <>
       <section className="bg-gray h-screen w-full flex justify-center items-center">
@@ -17,8 +21,8 @@ export default function StartedPage() {
             <button className="bg-black_button rounded-3xl py-2 w-48">
               <Link to="/about">Entenda o Autodroid</Link>
             </button>
-            <button className="bg-black_button rounded-3xl py-2 w-48">
-              <Link to="/training">Ambiente de execução</Link>
+            <button className="bg-black_button rounded-3xl py-2 w-48" onClick={() => localStorage.setItem("userId","812y312h3")}>
+              <Link to="/training" >Ambiente de execução</Link>
             </button>
           </div>
 

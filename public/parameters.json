@@ -3,12 +3,12 @@
     "Number Epochs": {
       "label": "Number Epochs",
       "descritpion": "O número total de épocas ( ciclos completos no conjunto de dados) durante o treinamento CGAN.",
-      "value": 0
+      "value": 1000
     },
     "Initializer Mean": {
       "label": "Initializer Mean",
       "descritpion": "Representa a média dos valores usados para inicializar os pesos da rede neural, fornecendo um ponto de partida para o aprendizado. ",
-      "value": 0
+      "value": 2
     },
     "Initializer Deviation": {
       "label": "Initializer Deviation",
@@ -37,6 +37,7 @@
     },
     "K-Fold": {
       "label": "K-Fold",
+     
       "descritpion": "Refere-se ao número de divisões (dobras) que o conjunto de dados será dividido durante a validação cruzada, se essa técnica for aplicada.",
       "value": 0
     },

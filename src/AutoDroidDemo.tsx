@@ -145,26 +145,7 @@ const AutoDroidDemo = () => {
     }
   };
 
-  const readUploadedFileAsText = (file: File) => {
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.result) {
-          resolve(reader.result.toString());
-        } else {
-          reject(new Error("Falha ao ler o conteúdo do arquivo"));
-        }
-      };
-
-      reader.onerror = () => {
-        reject(reader.error);
-      };
-
-      reader.readAsText(file);
-    });
-  };
-
+  
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       <h1 className="font-bold text-2xl">AutoDroid Demo</h1>
