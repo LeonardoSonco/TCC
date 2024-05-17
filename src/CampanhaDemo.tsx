@@ -58,17 +58,20 @@ const CampanhaDemo = () => {
     setSelectedCampaign(event.target.value);
 
     if (event.target.value != "customize" && campaigns) {
+
       setCustomParametersCampaing(campaigns[event.target.value]);
+
     } else if (event.target.value === "customize" && campaigns) {
       setCustomParametersCampaing(defaultCampaign);
     }
   };
 
   const handleAddCampaign = () => {
+
     if (campaigns && selectedCampaign) {
       //console.log("Name:", selectedCampaign);
       //console.log("Details:", campaigns[selectedCampaign]);
-      console.log("Customs Parameters:", customParametersCampaing);
+      // console.log("Customs Parameters:", customParametersCampaing);
 
       const campaignList = {
         name: selectedCampaign,
@@ -92,34 +95,24 @@ const CampanhaDemo = () => {
   };
 
   const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement>,
+    event: number,
     params: string
   ) => {
     //console.log(`${params}: ${event.target.value}`)
 
     setCustomParametersCampaing((prevParams) => ({
       ...prevParams,
-      [params]: event.target.value,
+      [params]: event,
     }));
   };
 
   const renderCampaignParametersChange = (campaign: Campaign) => {
+
+
     return (
       <>
         <div>
-          {Object.entries(campaign).map(([subKey, subValue]) => (
-            <div key={subKey} className="flex justify-between">
-              <span>{subKey.replace(/_/g, " ")}</span>
-              <input
-                className="border-2 w-16 ml-4"
-                type="text"
-                value={subValue}
-                onChange={(event) => {
-                  handleInputChange(event, subKey);
-                }}
-              />
-            </div>
-          ))}
+
         </div>
       </>
     );
@@ -184,3 +177,21 @@ export default CampanhaDemo;
    {selectedCampaign &&
               campaigns[selectedCampaign] &&
               renderCampaignParameters(campaigns[selectedCampaign])} */
+
+
+/*
+ 
+  {Object.entries(campaign).map(([subKey, subValue]) => (
+<div key={subKey} className="flex justify-between">
+<span>{subKey.replace(/_/g, " ")}</span>
+<input
+  className="border-2 w-16 ml-4"
+  type="text"
+  value={subValue}
+  onChange={(event) => {
+    handleInputChange(event, subKey);
+  }}
+/>
+</div>
+))}
+*/

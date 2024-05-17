@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import CampanhaDemo from "./CampanhaDemo";
+import Parameters from "./components/Parameters";
 
 
 
@@ -202,7 +203,7 @@ const AutoDroidDemo = () => {
         6 - Obtenha os resultados do processamento
       </button>
    
-      <CampanhaDemo />
+      <Parameters />
       
     </div>
   );
