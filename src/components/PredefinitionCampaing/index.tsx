@@ -5,8 +5,7 @@ import { useState } from "react";
 const PredefinitionCampaing = ({ listCampaings }: any) => {
 
     const [visibleCampaings, setVisibleCampaings] = useState<{ [key: string]: boolean }>({});
-    const [showCampaing, setShowCampaing] = useState(false);
-
+   
     const renderParametersCampaignSelected = (campaign: Campaign) => {
         return (
             <div>
