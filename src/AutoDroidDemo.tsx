@@ -67,7 +67,7 @@ const AutoDroidDemo = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer 4faa2a6c-524c-4bac-a2be-2f7eba37ba65`,
+            Authorization: `Bearer 42a1324a-3eb6-4f04-96ec-6e7327648050`,
             "Content-Type": "multipart/form-data",
           },
         }

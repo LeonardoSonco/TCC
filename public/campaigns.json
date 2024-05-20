@@ -1,90 +1,62 @@
 {
-    "Customize": {
-        "verbosity": "0",
-        "dense_layer_sizes_g": "0",
-        "dense_layer_sizes_d": "0",
-        "number_epochs": "0",
-        "training_algorithm": "0"
-    }
-    ,
-    "sf23_1l_64" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "64",
-        "dense_layer_sizes_d": "64",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    },
-    "sf23_1l_128" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "128",
-        "dense_layer_sizes_d": "128",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    },
-    "sf23_1l_256" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "256",
-        "dense_layer_sizes_d": "256",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-    ,
-    "sf23_1l_512" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "512",
-        "dense_layer_sizes_d": "512",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-    ,
-    "sf23_1l_1024" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "1024",
-        "dense_layer_sizes_d": "1024",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-    ,
-    "sf23_1l_4096" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "4096",
-        "dense_layer_sizes_d": "4096",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-    ,
-    "sf23_1l_8192" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "8192",
-        "dense_layer_sizes_d": "8192",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-    ,
-    "sf23_2l" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g": "512,1024",
-        "dense_layer_sizes_d": "1024,512",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-    ,
-    "sf23_3l" : {
-        "verbosity": "20",
-        "dense_layer_sizes_g":  "512,1024,2048",
-        "dense_layer_sizes_d": "2048,1024,512",
-        "number_epochs": "1000",
-        "training_algorithm": "Adam"
-
-    }
-   
+  "Customize": {
+    "verbosity": "0",
+    "dense_layer_sizes_g": "0",
+    "dense_layer_sizes_d": "0",
+    "number_epochs": "0"
+  },
+  "sf23_1l_64": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "64",
+    "dense_layer_sizes_d": "64",
+    "number_epochs": "1000"
+  },
+  "sf23_1l_128": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "128",
+    "dense_layer_sizes_d": "128",
+    "number_epochs": "1000"
+  },
+  "sf23_1l_256": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "256",
+    "dense_layer_sizes_d": "256",
+    "number_epochs": "1000"
+  },
+  "sf23_1l_512": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "512",
+    "dense_layer_sizes_d": "512",
+    "number_epochs": "1000"
+  },
+  "sf23_1l_1024": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "1024",
+    "dense_layer_sizes_d": "1024",
+    "number_epochs": "1000"
+  },
+  "sf23_1l_4096": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "4096",
+    "dense_layer_sizes_d": "4096",
+    "number_epochs": "1000"
+  },
+  "sf23_1l_8192": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "8192",
+    "dense_layer_sizes_d": "8192",
+    "number_epochs": "1000"
+  },
+  "sf23_2l": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "512,1024",
+    "dense_layer_sizes_d": "1024,512",
+    "number_epochs": "1000"
+  },
+  "sf23_3l": {
+    "verbosity": "20",
+    "dense_layer_sizes_g": "512,1024,2048",
+    "dense_layer_sizes_d": "2048,1024,512",
+    "number_epochs": "1000"
+  }
 }
-
