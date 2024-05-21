@@ -1,7 +1,7 @@
 import { Eye, EyeOff, Trash } from "react-feather";
 import { Campaign, ListCampaing } from "../../types";
 import { useState } from "react";
-import { uploadDataset } from "../../services/services";
+import { processingStatusToId, uploadDataset } from "../../services/services";
 
 const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
   const [visibleCampaings, setVisibleCampaings] = useState<{
@@ -10,12 +10,12 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
 
   const renderParametersCampaignSelected = (campaign: Campaign) => {
     return (
-      <div>
+      <>
         {Object.entries(campaign).map(([key, value]) => {
           if (typeof value === "object" && value) {
             return (
               <>
-                <p>{value.name}</p>
+                <p key={key}>{value.name}</p>
               </>
             );
           } else {
@@ -28,7 +28,7 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
             );
           }
         })}
-      </div>
+      </>
     );
   };
 
@@ -49,18 +49,18 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
       [index]: !prevState[index],
     }));
   };
-  const handleUploadDatasets = () => {
-    listCampaings.map((campaign: any,index:number) => {
-      uploadDataset(campaign.parameters.datasetSelected,index);
-    });
+  const handleUploadDatasets = async () => {
+    for (let index = 0; index < listCampaings.length; index++) {
+      await uploadDataset(listCampaings[index].parameters, index);
+    }
   };
   return (
-    <div>
+    <>
       {listCampaings.length > 0 ? (
         <>
           {listCampaings.map((value: any, index: number) => (
-            <div className="border-2 mb-2 mx-4 p-2">
-              <div key={index} className=" flex justify-between">
+            <div key={index} className="border-2 mb-2 mx-4 p-2">
+              <div className=" flex justify-between">
                 <h2>{value.name}</h2>
 
                 <div className="flex gap-2">
@@ -96,6 +96,8 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
             >
               Iniciar
             </button>
+
+            <button onClick={processingStatusToId}>Status</button>
           </div>
         </>
       ) : (
@@ -103,7 +105,7 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
           <p className="ml-4">Sem campanhas selecionadas</p>
         </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -87,7 +87,7 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
                 key={subKey}
                 label={subKey.replace(/_/g, " ")}
                 onChange={(newValue) => {
-                  handleInputChange(newValue, subKey);
+                  handleInputChange(newValue.toString(), subKey);
                 }}
                 value={subValue}
                 description={"parameter.descritpion"}
