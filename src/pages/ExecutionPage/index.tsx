@@ -5,6 +5,7 @@ import Parameters from "../../components/Parameters";
 import { ListCampaing } from "../../types";
 import PredefinitionCampaing from "../../components/PredefinitionCampaing";
 import { registerUser } from "../../services/services";
+import ProcessStatus from "../../components/ProcessStatus";
 
 const ExecutionPage: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>("");
@@ -29,7 +30,7 @@ const ExecutionPage: React.FC = () => {
       {sessionStorage.getItem("userId") ? (
         <>
           <Header isExecutionEnvironment={true} />
-          <section className="mx-10 ">
+          <section className="mx-10 mb-10">
             {currentUserId ? (
               <p className="mb-8 font-semibold">
                 ID do Usuário: {currentUserId}
@@ -39,7 +40,7 @@ const ExecutionPage: React.FC = () => {
             )}
 
             <div className="grid grid-cols-3  max-lg:flex max-lg:flex-col max-lg:justify-center">
-              <div className="col-span-2 shadow-shadowBox rounded-xl justify-self-center ">
+              <div className="col-span-2 shadow-shadowBox rounded-xl justify-self-center max-lg:max-w-max  max-lg:m-auto">
                 <div className="flex flex-col justify-center items-center px-10">
                   <div className="pt-5 w-full flex justify-center">
                     <h3 className="font-bold text-xl  max-sm+:pl-0 max-xs:text-lg">
@@ -70,6 +71,12 @@ const ExecutionPage: React.FC = () => {
                 </div>
               </div>
             </div>
+          </section>
+
+          <section className="mx-10 ">
+
+            <ProcessStatus />
+            <ProcessStatus />
           </section>
 
           <Footer />
