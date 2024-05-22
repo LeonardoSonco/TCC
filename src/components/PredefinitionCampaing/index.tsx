@@ -3,7 +3,7 @@ import { Campaign, ListCampaing } from "../../types";
 import { useState } from "react";
 import { processingStatusToId, uploadDataset } from "../../services/services";
 
-const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
+const PredefinitionCampaing = ({ listCampaings, setListCampaigns, setProcessStatus }: any) => {
   const [visibleCampaings, setVisibleCampaings] = useState<{
     [key: string]: boolean;
   }>({});
@@ -51,8 +51,9 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
   };
   const handleUploadDatasets = async () => {
     for (let index = 0; index < listCampaings.length; index++) {
-      await uploadDataset(listCampaings[index].parameters, index);
+      await uploadDataset(listCampaings[index], index);
     }
+    
   };
   return (
     <>

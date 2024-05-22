@@ -155,7 +155,7 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
                   Carregue seu conjunto de dados
                 </label>
                 <input
-                  className="block text-sm w-full text-stone-500 border-2 rounded-md mt-2 border-black_button file:text-base file:px-6 file:py-1 file:border-[0px] file:bg-black_button file:text-white file:font-medium    max-xs:file:px-1 max-xs:file:text-sm"
+                  className="block text-sm w-full text-stone-500 border-2 rounded-md mt-2 border-black_button file:text-base file:px-6 file:py-1 file:border-[0px] file:bg-black_button file:text-white file:font-medium max-xs:file:px-1 max-xs:file:text-sm"
                   id="fileInput"
                   type="file"
                   onChange={handleFileChange}

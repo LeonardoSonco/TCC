@@ -4,15 +4,16 @@ import Footer from "../../components/Footer";
 import Parameters from "../../components/Parameters";
 import { ListCampaing } from "../../types";
 import PredefinitionCampaing from "../../components/PredefinitionCampaing";
-import { registerUser } from "../../services/services";
+import { processingStatusToId, registerUser } from "../../services/services";
 import ProcessStatus from "../../components/ProcessStatus";
 
 const ExecutionPage: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>("");
   const [listCampaigns, setListCampaigns] = useState<ListCampaing[]>([]);
+  const [processStatus, setProcessStatus] = useState<any>();
 
   useEffect(() => {
-    const userId = sessionStorage.getItem("userId");
+    const userId = localStorage.getItem("userId");
     if (userId) {
       setCurrentUserId(userId);
     } else {
@@ -22,12 +23,16 @@ const ExecutionPage: React.FC = () => {
 
   const handleRegisterUser = async () => {
     await registerUser();
-    setCurrentUserId(sessionStorage.getItem("userId"));
+    setCurrentUserId(localStorage.getItem("userId"));
+  };
+
+  const handleReloadProcessStatus = async () => {
+    setProcessStatus(await processingStatusToId());
   };
 
   return (
     <>
-      {sessionStorage.getItem("userId") ? (
+      {localStorage.getItem("userId") ? (
         <>
           <Header isExecutionEnvironment={true} />
           <section className="mx-10 mb-10">
@@ -65,6 +70,7 @@ const ExecutionPage: React.FC = () => {
                   <PredefinitionCampaing
                     listCampaings={listCampaigns}
                     setListCampaigns={setListCampaigns}
+                    setProcessStatus={setProcessStatus}
                   />
 
                   <div className="text-center"></div>
@@ -74,9 +80,32 @@ const ExecutionPage: React.FC = () => {
           </section>
 
           <section className="mx-10 ">
+            <button
+              className="p-4 border-2"
+              onClick={handleReloadProcessStatus}
+            >
+              ATUALIZAR
+            </button>
 
-            <ProcessStatus />
-            <ProcessStatus />
+            {processStatus ? (
+              <>
+                {Object.entries(processStatus).map(([name, result]: any) => {
+                  return result.map((process: any, index: number) => {
+                    return (
+                      <ProcessStatus
+                        key={`${name}-${index}`}
+                        name={name}
+                        processStatus={process}
+                      />
+                    );
+                  });
+                })}
+              </>
+            ) : (
+              <>
+                <p>NAO ENCONTRADO</p>
+              </>
+            )}
           </section>
 
           <Footer />
@@ -100,3 +129,4 @@ const ExecutionPage: React.FC = () => {
   );
 };
 export default ExecutionPage;
+//{processStatus && <ProcessStatus processStatus={processStatus} />}

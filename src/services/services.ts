@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 
 export const registerUser = async () => {
   try {
-    if (!sessionStorage.getItem("userId")) {
+    if (!localStorage.getItem("userId")) {
       const response: AxiosResponse<any> = await axios.post(
         "/api/user/register"
       );
@@ -14,9 +14,9 @@ export const registerUser = async () => {
       const userId = response.data.id;
 
       console.log(`User registered with id: ${userId}`);
-      sessionStorage.setItem("userId", userId);
+      localStorage.setItem("userId", userId);
     } else {
-      alert(`USUARIO CRIADO COM O ID ${sessionStorage.getItem("userId")}`);
+      alert(`USUARIO CRIADO COM O ID ${localStorage.getItem("userId")}`);
     }
   } catch (error) {
     console.error("Failed to register user:", error);
@@ -25,24 +25,25 @@ export const registerUser = async () => {
 
 export const uploadDataset = async (campaingParameters: any, index: number) => {
   try {
-    if (!campaingParameters.datasetSelected) {
+    if (!campaingParameters.parameters.datasetSelected) {
       console.error("Nenhum arquivo selecionado");
       return;
     }
     if (index.toString() === "0") {
-      sessionStorage.removeItem("datasetIds");
+      localStorage.removeItem("datasetIds");
     }
 
-    const datasetIdsJson = sessionStorage.getItem("datasetIds");
+    const datasetIdsJson = localStorage.getItem("datasetIds");
+
     const datasetIds: string[] = datasetIdsJson
       ? JSON.parse(datasetIdsJson)
       : []; // converte string json para um array de strings
 
     const formData = new FormData();
-    formData.append("dataset", campaingParameters.datasetSelected);
+    formData.append("dataset", campaingParameters.parameters.datasetSelected);
     formData.append(
       "description",
-      ` (${index + 1})${campaingParameters.datasetSelected.name}`
+      ` (${index + 1})${campaingParameters.parameters.datasetSelected.name}`
     );
 
     const response: AxiosResponse<any> = await axios.post(
@@ -50,20 +51,17 @@ export const uploadDataset = async (campaingParameters: any, index: number) => {
       formData,
       {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("userId")}`,
+          Authorization: `Bearer ${localStorage.getItem("userId")}`,
           "Content-Type": "multipart/form-data",
         },
       }
     );
 
-    console.log("Id do Dataset:" + response.data.id);
-
     await datasetProcessing(campaingParameters, response.data.id);
 
     datasetIds.push(response.data.id);
-    console.log(datasetIds);
 
-    sessionStorage.setItem("datasetIds", JSON.stringify(datasetIds));
+    localStorage.setItem("datasetIds", JSON.stringify(datasetIds));
   } catch (error) {
     console.error("Failed to upload dataset:", error);
   }
@@ -73,7 +71,7 @@ const datasetProcessing = async (
   campaingParameters: any,
   datasetId: string
 ) => {
-  const { datasetSelected, ...parameters } = campaingParameters;
+  const { datasetSelected, ...parameters } = campaingParameters.parameters;
 
   const requestData = {
     dataset_id: datasetId,
@@ -81,7 +79,8 @@ const datasetProcessing = async (
     params: parameters,
   };
 
-  const processIdsJson = sessionStorage.getItem("processIds");
+  const processIdsJson = localStorage.getItem("processIds");
+
   const processIds: string[] = processIdsJson ? JSON.parse(processIdsJson) : []; // converte string json para um array de strings
 
   try {
@@ -90,73 +89,99 @@ const datasetProcessing = async (
       requestData,
       {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("userId")}`,
+          Authorization: `Bearer ${localStorage.getItem("userId")}`,
           "Content-Type": "application/json",
         },
       }
     );
 
-    console.log("Fazendo o processamento:", response.data);
-    console.log("Id do processo:", response.data.id);
-    processIds.push(response.data.id);
-    sessionStorage.setItem("processIds", JSON.stringify(processIds));
-    console.log(requestData);
+    const teste = `${response.data.id}$$${campaingParameters.name}`;
+
+    processIds.push(teste);
+    localStorage.setItem("processIds", JSON.stringify(processIds));
   } catch (error) {
     console.error("Failed to processing dataset:", error);
   }
 };
 
-/*
-
- {
-      verbosity: "20",
-      dense_layer_sizes_g: "256",
-      dense_layer_sizes_d: "256",
-      number_epochs: "1000",
-      training_algorithm: "Adam",
-    }
-*/
-
 export const processingStatusToId = async () => {
   try {
-    
-    const processosIds = (sessionStorage.getItem("processIds"))?.replace(/[\[\]"]+/g, '')
-    console.log(processosIds)
-    //${(sessionStorage.getItem("userId"))?.replace(/[\[\]"]+/g, '') }
-    const response: AxiosResponse<any> = await axios.get(
-      `/api/processing/${processosIds}`,
-      {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("userId")}`,
-        },
-      }
-    );
-    console.log("Status do processo:", response.data.processing);
+    const processosIds = localStorage.getItem("processIds");
+
+    let arrayProcessosIds: string[] = [];
+    if (processosIds) {
+      arrayProcessosIds = extrairConteudo(processosIds);
+    }
+
+    if (arrayProcessosIds.length > 0) {
+      // pegas os ids e nomes para fazer as requisições
+      const requests = arrayProcessosIds.map((item) => {
+        const { id, name } = dividirStringParaObjeto(item);
+        return axios
+          .get(`/api/processing/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("userId")}`,
+            },
+          })
+          .then((response) => ({ name, data: response.data.processing }));
+      });
+
+      // espera as requisições ficarem prontas
+      const results = await Promise.all(requests);
+
+      // contruindo o objeto que serpa  retornado para o resultado
+      const processStatusMap: { [key: string]: any[] } = {};
+      results.forEach((result) => {
+        if (!processStatusMap[result.name]) {
+          processStatusMap[result.name] = []; // incia o array se a chave ainda não existir
+        }
+        processStatusMap[result.name].push(result.data); // adiciona o valor ao array
+      });
+
+      return processStatusMap;
+    } else {
+      console.log("Nenhum ID de processo encontrado.");
+    }
   } catch (error) {
-    console.error("Failed to processing status:", error);
+    console.error("Failed to process status:", error);
   }
 };
 
 const processingResult = async () => {
   try {
-    //const processingId = "f3956812-eb9d-4af4-ac4c-86bbd89eae18"; // Substitua pelo ID do processamento
-
     const response = await axios.get(
-      `/api/processing/${sessionStorage.getItem("processIds")}`,
+      `/api/processing/${localStorage.getItem("processIds")}`,
       {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("userId")}`,
+          Authorization: `Bearer ${localStorage.getItem("userId")}`,
         },
       }
     );
-
-    console.log("Resultados:", response.data);
     const files = response.data.processing.files;
-    console.log("Resultados:");
+
     files.forEach((file: any) => {
       console.log(file);
     });
   } catch (error) {
     console.error("Failed to processing result:", error);
   }
+};
+// Função para dividir a string em id e name
+const dividirStringParaObjeto = (str: string) => {
+  const partes = str.split("$$");
+  return {
+    id: partes[0],
+    name: partes[1],
+  };
+};
+
+// Função para extrair o conteúdo entre aspas
+const extrairConteudo = (str: string): string[] => {
+  const regex = /"([^"]*)"/g;
+  const matches: string[] = [];
+  let match;
+  while ((match = regex.exec(str)) !== null) {
+    matches.push(match[1]);
+  }
+  return matches;
 };

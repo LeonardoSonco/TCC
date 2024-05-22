@@ -1,6 +1,6 @@
 import { Play } from "react-feather";
 import Logo from "../../assets/Logo.png";
-
+import Logo2 from "../../assets/Logo2.svg";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -68,7 +68,10 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
           ${isNavOpen ? "showMenu " : ""}
         `}
         >
-          <img src={Logo} alt="" className="w-40" />
+          <div className="flex items-center text-xl font-semibold">
+          <img src={Logo2} alt="" className="w-14" />
+          <h2>MalwareDatalab</h2>
+          </div>
 
           <nav>
             <section className="MOBILE-MENU flex lg:hidden">
