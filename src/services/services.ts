@@ -43,7 +43,7 @@ export const uploadDataset = async (campaingParameters: any, index: number) => {
     formData.append("dataset", campaingParameters.parameters.datasetSelected);
     formData.append(
       "description",
-      ` (${index + 1})${campaingParameters.parameters.datasetSelected.name}`
+      `${campaingParameters.parameters.datasetSelected.name}`
     );
 
     const response: AxiosResponse<any> = await axios.post(

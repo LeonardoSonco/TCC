@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import FormInput from "../FormInput/";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Campaign, ListCampaing } from "../../types";
@@ -19,16 +19,9 @@ const defaultCampaign: Campaign = {
 const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
   const [campaigns, setCampaigns] = useState<Campaigns | null>(null); // campanhas que estão no json
   const [campaignSelected, setCampaignSelected] = useState<string>(""); // campanha que foi selecionado no select
-
-  /*
-    
-        const [listCampaignsList, setListCampaignsList] = useState<
-            ListCampaing[]
-        >([]); // lista de campanha que o usuario quer processar
-    */
-
   const [customParametersCampaing, setCustomParametersCampaing] =
     useState<Campaign>(defaultCampaign);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +60,12 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
       };
 
       setListCampaignsList((prevList: any) => [...prevList, campaignList]);
+
+      setCustomParametersCampaing(defaultCampaign);
+      setCampaignSelected("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -150,7 +149,7 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
             {campaignSelected &&
               renderInputParametersCampaign(customParametersCampaing)}
             <div className="my-10">
-              <form className={``}>
+              <form className={`px-2`}>
                 <label className="text-base font-medium" htmlFor="fileInput">
                   Carregue seu conjunto de dados
                 </label>
@@ -159,10 +158,12 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
                   id="fileInput"
                   type="file"
                   onChange={handleFileChange}
+                  ref={fileInputRef}
+                  accept=".csv"
                 />
 
                 <div className="mt-1 text-sm text-gray-500">
-                  Tipos de extensão: .xlsx .xls .csv
+                  Tipos de extensão: .csv
                 </div>
               </form>
             </div>
@@ -185,34 +186,3 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
 };
 
 export default Parameters;
-
-/*
-<div className="text-center mb-10">
-    <button
-        onClick={handleSubmit}
-        className="border-2 bg-black_button text-white w-72 py-2 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg"
-    >
-        Iniciar
-    </button>
-</div>
-*/
-
-/*
- AQUI MOSTRA TODOS AS CAMPANHAS QUE FORAM SELECIONADAS
- <div>
-                {listCampaignsList.length > 0 ? (
-                    listCampaignsList.map((value, index) => (
-                        <div key={index} className="border-2 mb-2">
-                            <h2>{value.name}</h2>
-                            {renderParametersCampaignSelected(value.parameters)}
-                        </div>
-                    ))
-                ) : (
-                    <>
-                        <p>Sem campanhas selecionadas</p>
-                    </>
-                )}
-            </div>
-
-
-*/

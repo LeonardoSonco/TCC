@@ -22,7 +22,7 @@ const ProcessStatus = ({ name, processStatus }: any) => {
               </>
             ) : (
               <>
-                <p>FAIL</p>
+                <p>{processStatus.status}</p>
               </>
             )}
           </div>

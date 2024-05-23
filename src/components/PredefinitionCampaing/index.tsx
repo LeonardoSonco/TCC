@@ -1,9 +1,9 @@
 import { Eye, EyeOff, Trash } from "react-feather";
 import { Campaign, ListCampaing } from "../../types";
 import { useState } from "react";
-import { processingStatusToId, uploadDataset } from "../../services/services";
+import { uploadDataset } from "../../services/services";
 
-const PredefinitionCampaing = ({ listCampaings, setListCampaigns, setProcessStatus }: any) => {
+const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
   const [visibleCampaings, setVisibleCampaings] = useState<{
     [key: string]: boolean;
   }>({});
@@ -11,20 +11,14 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns, setProcessStat
   const renderParametersCampaignSelected = (campaign: Campaign) => {
     return (
       <>
-        {Object.entries(campaign).map(([key, value]) => {
+        {Object.entries(campaign).map(([key, value], index) => {
           if (typeof value === "object" && value) {
-            return (
-              <>
-                <p key={key}>{value.name}</p>
-              </>
-            );
+            return <p key={`${key}-${index}`}>{value.name}</p>;
           } else {
             return (
-              <>
-                <p key={key}>
-                  {key.replace(/_/g, " ")}: {value.toString()}
-                </p>
-              </>
+              <p key={`${key}-${index}`}>
+                {key.replace(/_/g, " ")}: {value.toString()}
+              </p>
             );
           }
         })}
@@ -53,7 +47,6 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns, setProcessStat
     for (let index = 0; index < listCampaings.length; index++) {
       await uploadDataset(listCampaings[index], index);
     }
-    
   };
   return (
     <>
@@ -97,8 +90,6 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns, setProcessStat
             >
               Iniciar
             </button>
-
-            <button onClick={processingStatusToId}>Status</button>
           </div>
         </>
       ) : (

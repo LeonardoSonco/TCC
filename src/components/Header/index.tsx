@@ -1,25 +1,20 @@
 import { Play } from "react-feather";
-import Logo from "../../assets/Logo.png";
-import Logo2 from "../../assets/Logo2.svg";
+
+import Logo from "../../assets/Logo2.svg";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
 interface HeaderExecutionEnvironment {
   isExecutionEnvironment?: boolean;
+  menuActive?: string;
 }
 
 const Header: React.FC<HeaderExecutionEnvironment> = ({
   isExecutionEnvironment = false,
+  menuActive = "",
 }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [menuHamburguer, setMenuHamburguer] = useState(false);
-  const [isAPISubmenuOpen, setIsAPISubmenuOpen] = useState(false);
-  const [isPaperSubmenuOpen, setIsPaperSubmenuOpen] = useState(false);
-  const [menuActive, setMenuActive] = useState("about");
-
-
- 
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,14 +47,6 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
     };
   }, [isNavOpen]);
 
-  function handlerMenuActive(
-    change: React.SetStateAction<string>
-  ): MouseEventHandler<HTMLSpanElement> {
-    return function (event) {
-      setMenuActive(change);
-    };
-  }
-
   return (
     <>
       {menuHamburguer ? (
@@ -68,15 +55,15 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
           ${isNavOpen ? "showMenu " : ""}
         `}
         >
-          <div className="flex items-center text-xl font-semibold">
-          <img src={Logo2} alt="" className="w-14" />
-          <h2>MalwareDatalab</h2>
-          </div>
+          <Link to={"/"} className="flex items-center text-xl font-semibold">
+            <img src={Logo} alt="" className="w-14" />
+            <h2>MalwareDatalab</h2>
+          </Link>
 
           <nav>
             <section className="MOBILE-MENU flex lg:hidden">
               <div
-                className="HAMBURGER-ICON space-y-2"
+                className="HAMBURGER-ICON space-y-2 cursor-pointer"
                 onClick={() => setIsNavOpen((prev) => !prev)}
               >
                 <span className="block h-0.5 w-8 bg-black"></span>
@@ -86,11 +73,9 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
 
               <div className={isNavOpen ? "showMenuNav" : "hideMenuNav"}>
                 <div
-                  className="CROSS-ICON absolute top-0 right-0 pl-8 pb-8 pr-3 pt-6"
+                  className="CROSS-ICON absolute top-0 right-0 pl-8 pb-8 pr-3 pt-6 cursor-pointer"
                   onClick={() => {
                     setIsNavOpen(false);
-                    setIsPaperSubmenuOpen(false);
-                    setIsAPISubmenuOpen(false);
                   }}
                 >
                   <svg
@@ -110,104 +95,31 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
                   {isExecutionEnvironment ? (
                     <>
                       <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ">
-                        <Link to={"/about"}>Entenda MalwareDatalab</Link>
+                        <Link to={"/about/cgans"}>Entenda MalwareDatalab</Link>
                       </li>
                     </>
                   ) : (
                     <>
-                      <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ">
-                        Sobre
-                      </li>
-                      <li
-                        className={`border-b border-gray py-3 uppercase cursor-pointer font-bold w-full px-2 ${
-                          isAPISubmenuOpen
-                            ? "bg-strong_gray text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => setIsAPISubmenuOpen(!isAPISubmenuOpen)}
+                      <Link
+                        className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 "
+                        to="/about/cgans"
                       >
-                        <div
-                          className={`flex justify-between items-center px-2 `}
-                        >
-                          {isAPISubmenuOpen ? (
-                            <Play
-                              style={{
-                                transform: "rotate(90deg)",
-                                fill: "white",
-                              }}
-                              size={13}
-                            />
-                          ) : (
-                            <Play
-                              style={{
-                                transform: "rotate(180deg)",
-                                fill: "black",
-                              }}
-                              size={13}
-                            />
-                          )}{" "}
-                          <p>API</p>
-                        </div>
+                        CGANs
+                      </Link>
 
-                        {isAPISubmenuOpen && (
-                          <ul className="submenu  text-sm font-medium text-left mt-2">
-                            <li onClick={() => setIsNavOpen(false)}>
-                              Primeiros passos
-                            </li>
-                            <li onClick={() => setIsNavOpen(false)}>
-                              Parâmetros
-                            </li>
-                            <li onClick={() => setIsNavOpen(false)}>
-                              Documentação
-                            </li>
-                          </ul>
-                        )}
-                      </li>
-                      <li className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2">
-                        Datasets
-                      </li>
-                      <li
-                        className={`border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 ${
-                          isPaperSubmenuOpen
-                            ? "bg-strong_gray  text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() =>
-                          setIsPaperSubmenuOpen(!isPaperSubmenuOpen)
-                        }
+                      <Link
+                        className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2 "
+                        to="/about/droidaugmentor"
                       >
-                        <div className="flex justify-between items-center px-2">
-                          {isPaperSubmenuOpen ? (
-                            <Play
-                              style={{
-                                transform: "rotate(90deg)",
-                                fill: "white",
-                              }}
-                              size={13}
-                            />
-                          ) : (
-                            <Play
-                              style={{
-                                transform: "rotate(180deg)",
-                                fill: "black",
-                              }}
-                              size={13}
-                            />
-                          )}{" "}
-                          <p>Papers</p>
-                        </div>
+                        DroidAugmentor
+                      </Link>
 
-                        {isPaperSubmenuOpen && (
-                          <ul className="submenu text-sm font-medium text-left">
-                            <li onClick={() => setIsNavOpen(false)}>
-                              AutoDroid
-                            </li>
-                            <li onClick={() => setIsNavOpen(false)}>
-                              DroidArgumentor
-                            </li>
-                          </ul>
-                        )}
-                      </li>
+                      <Link
+                        className="border-b border-gray py-3  uppercase cursor-pointer font-bold w-full px-2"
+                        to="/about/autodroid"
+                      >
+                        AutoDroid
+                      </Link>
                     </>
                   )}
                 </ul>
@@ -233,7 +145,7 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
                 //align-items: center;
                 text-align:end;
                 transition: all;
-                transition-duration: 5000ms;
+                transition-duration: 500ms;
               }
               .overlay {
                 position: fixed;
@@ -268,58 +180,48 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
         <header className="flex justify-between px-16 py-4 items-center bg-gray_header">
           <Link to="/">
             {" "}
-            <img src={Logo} alt="" className="w-40" />
+            <div className="flex items-center text-xl font-semibold">
+              <img src={Logo} alt="" className="w-14" />
+              <h2>MalwareDatalab</h2>
+            </div>
           </Link>
-
-          <ul className="flex items-center gap-10 font-medium">
-            {isExecutionEnvironment ? (
-              <> </>
-            ) : (
-              <>
-                {" "}
-                <Link
-                  to="/about"
-                  onClick={handlerMenuActive("about")}
-                  className={`${
-                    menuActive === "about" ? "font-bold border-b-2" : ""
-                  } `}
-                >
-                  Sobre
-                </Link>
-                <Link
-                  to="/api"
-                  onClick={handlerMenuActive("api")}
-                  className={`${
-                    menuActive === "api" ? "font-bold border-b-2" : ""
-                  } `}
-                >
-                  API
-                </Link>
-                <Link
-                  to="/dataset"
-                  onClick={handlerMenuActive("dataset")}
-                  className={`${
-                    menuActive === "dataset" ? "font-bold border-b-2" : ""
-                  } `}
-                >
-                  Datasets
-                </Link>
-                <Link
-                  to="/papers"
-                  onClick={handlerMenuActive("papers")}
-                  className={`${
-                    menuActive === "papers" ? "font-bold border-b-2" : ""
-                  } `}
-                >
-                  Papers
-                </Link>
-              </>
-            )}
-          </ul>
-
-          <button className="bg-black_button py-2 w-44 rounded-sm text-white">
-            Ambiente de execução
-          </button>
+          <nav>
+            <ul className="flex items-center gap-10 font-medium">
+              {isExecutionEnvironment ? (
+                <> </>
+              ) : (
+                <>
+                  {" "}
+                  <Link
+                    to="/about/cgans"
+                    className={`${
+                      menuActive == "cgans" ? "font-bold border-b-2" : ""
+                    } `}
+                  >
+                    CGANs
+                  </Link>
+                  <Link
+                    to="/about/droidaugmentor"
+                    className={`${
+                      menuActive == "droidaugmentor"
+                        ? "font-bold border-b-2"
+                        : ""
+                    } `}
+                  >
+                    DroidAugmentor
+                  </Link>
+                  <Link
+                    to="/about/autodroid"
+                    className={`${
+                      menuActive == "autodroid" ? "font-bold border-b-2" : ""
+                    } `}
+                  >
+                    AutoDroid
+                  </Link>
+                </>
+              )}
+            </ul>
+          </nav>
         </header>
       )}
     </>

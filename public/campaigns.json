@@ -46,17 +46,5 @@
     "dense_layer_sizes_g": "8192",
     "dense_layer_sizes_d": "8192",
     "number_epochs": "1000"
-  },
-  "sf23_2l": {
-    "verbosity": "20",
-    "dense_layer_sizes_g": "512,1024",
-    "dense_layer_sizes_d": "1024,512",
-    "number_epochs": "1000"
-  },
-  "sf23_3l": {
-    "verbosity": "20",
-    "dense_layer_sizes_g": "512,1024,2048",
-    "dense_layer_sizes_d": "2048,1024,512",
-    "number_epochs": "1000"
   }
 }
