@@ -27,11 +27,11 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
   };
 
   const handleRemoveCampaing = (index: number) => {
-    // faz a copia do array do array
+    // faz a copia do array
     const updatedListCampaings = [...listCampaings];
     updatedListCampaings.splice(index, 1);
 
-    // atualiza o estado com cópia do array
+    // atualiza o estado com copia do array
     setListCampaigns(updatedListCampaings);
   };
 
@@ -47,6 +47,7 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
     for (let index = 0; index < listCampaings.length; index++) {
       await uploadDataset(listCampaings[index], index);
     }
+    setListCampaigns([])
   };
   return (
     <>

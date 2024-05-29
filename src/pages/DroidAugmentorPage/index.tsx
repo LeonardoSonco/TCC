@@ -1,12 +1,9 @@
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import fluxoDroidAugmentor from "../../assets/fluxo_droidaugmentor.png";
+import fluxoDroidAugmentor from "../../assets/img/fluxo_droidaugmentor.png";
+import PublicLayout from "../../layouts/Public";
 
 export default function DroidAugmentorPage() {
   return (
-    <>
-      <Header menuActive="droidaugmentor" />
-
+    <PublicLayout>
       <section className=" w-7/12 flex flex-col gap-4 mx-auto mb-20 mt-10 max-lg:w-9/12 max-lg:max-sm:w-11/12 max-sm:text-justify">
         <div className="flex flex-col gap-4 ">
           <h3 className="font-bold text-xl max-sm:text-center">
@@ -67,8 +64,7 @@ export default function DroidAugmentorPage() {
           <p className="font-medium">GAN condicional</p>
         </div>
       </section>
-      <Footer />
-    </>
+    </PublicLayout>
   );
 }
 

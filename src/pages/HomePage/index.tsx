@@ -1,11 +1,11 @@
-import Logo from "../../assets/Logo2.svg";
-import github from "../../assets/GitHub.svg";
+import logoEditorDark from "../../assets/img/logoFaviconDark.svg";
+import github from "../../assets/img/GitHub.svg";
 
-import style from "./index.module.css";
+import style from "../../assets/css/size.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/services";
 
-export default function StartedPage() {
+const HomePage = () => {
   const navigate = useNavigate();
 
   const handlerRegisterUser = async () => {
@@ -20,7 +20,7 @@ export default function StartedPage() {
           className={`bg-white flex flex-col items-center gap-8 py-16 rounded-2xl ${style.size} shadow-shadowBox`}
         >
           <div className="flex items-center text-2xl font-semibold">
-            <img src={Logo} alt="" className="w-20" />
+            <img src={logoEditorDark} alt="" className="w-16" />
             <h2>MalwareDatalab</h2>
           </div>
 
@@ -43,4 +43,5 @@ export default function StartedPage() {
       </section>
     </>
   );
-}
+};
+export default HomePage;

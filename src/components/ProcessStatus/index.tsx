@@ -1,13 +1,25 @@
+import { Tooltip } from "@mui/material";
 import { Check } from "react-feather";
+import Zoom from "@mui/material/Zoom";
 
 const ProcessStatus = ({ name, processStatus }: any) => {
   return (
     <>
       <div className="shadow-shadowBox rounded-xl mb-6">
         <div className="flex justify-between items-center px-10 py-5 max-sm:flex-col max-sm: gap-2 text-center">
-          <h4 className="font-bold">
-            Parâmetros: <span className="font-normal">{name}</span>
-          </h4>
+          <div>
+            <h4 className="font-bold">Parâmetros:</h4>
+            <Tooltip
+              TransitionComponent={Zoom}
+              title={JSON.stringify(processStatus.params)
+                .replace(/[{}"]/g, "")
+                .replace(/,/g, " | ")}
+              placement="top-start"
+              arrow
+            >
+              <span className="font-normal">{name}</span>
+            </Tooltip>
+          </div>
           <p className="font-bold ">
             Nome do conjunto de dados usado:
             <span className="font-normal">

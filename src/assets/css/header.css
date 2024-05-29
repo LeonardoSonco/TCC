@@ -1,0 +1,45 @@
+.hideMenuNav {
+    display: none;
+    
+  }
+  .showMenuNav {
+    display: block;
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    top: 0;
+    right:0;
+    background: #ffffff;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: start;*/
+    padding-top: 70px;
+    /*align-items: center;*/
+    text-align:end;
+    transition: all;
+    transition-duration: 500ms;
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0%; /* metade da tela */
+    width: 50%; /* metade da tela */
+    height: 100%;
+    background-color: rgba(124, 124, 124, 0.5); /* cor cinza com 50% de opacidade */
+    z-index: 5;
+  }
+  
+  .submenu {
+    width: 100%;
+    padding: 10px 0px 10px 10px;
+   
+
+  }
+  
+  .submenu li {
+    list-style-type: none;
+    padding: 5px 0;
+    cursor: pointer;
+    
+  }

@@ -1,20 +1,29 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import Parameters from "../../components/Parameters";
-import { ListCampaing } from "../../types";
-import PredefinitionCampaing from "../../components/PredefinitionCampaing";
-import { processingStatusToId, registerUser } from "../../services/services";
-import ProcessStatus from "../../components/ProcessStatus";
-import Logo from "../../assets/Logo2.svg";
 import { Link } from "react-router-dom";
-import { RefreshCw } from "react-feather";
 
-const ExecutionPage: React.FC = () => {
+import { RefreshCw } from "react-feather";
+import Logo from "../../assets/img/logoFaviconDark.svg";
+
+import PrivateLayout from "../../layouts/Private";
+import Parameters from "../../components/Parameters";
+import PredefinitionCampaing from "../../components/PredefinitionCampaing";
+import ProcessStatus from "../../components/ProcessStatus";
+
+import {
+  processingResult,
+  processingStatusToId,
+  registerUser,
+} from "../../services/services";
+
+import { ListCampaing } from "../../types";
+
+const TrainingPage: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>("");
   const [listCampaigns, setListCampaigns] = useState<ListCampaing[]>([]);
   const [processStatus, setProcessStatus] = useState<any>();
   const [isSpinning, setIsSpinning] = useState(false);
+
+  const [file, setFile] = useState<string | undefined>("");
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -24,7 +33,14 @@ const ExecutionPage: React.FC = () => {
       console.log(currentUserId);
     }
   }, []); // Executa apenas uma vez após a montagem do componente
-
+  /*
+  useEffect(() => {
+    const processStatusUpdate = async () => {
+      setProcessStatus(await processingStatusToId());
+    };
+    processStatusUpdate();
+  }, [processStatus]);
+*/
   const handleRegisterUser = async () => {
     await registerUser();
     setCurrentUserId(localStorage.getItem("userId"));
@@ -37,14 +53,15 @@ const ExecutionPage: React.FC = () => {
       setIsSpinning(false);
       setProcessStatus(await processingStatusToId());
     }, 1000);
-    
   };
 
+  const handleDownloadFile = async () => {
+    setFile(await processingResult());
+  };
   return (
     <>
       {localStorage.getItem("userId") ? (
-        <>
-          <Header isExecutionEnvironment={true} />
+        <PrivateLayout>
           <section className="mx-10 mb-10">
             {currentUserId ? (
               <p className="mb-8 font-semibold">
@@ -62,10 +79,7 @@ const ExecutionPage: React.FC = () => {
                       Parâmetros de Treinamento
                     </h3>
                   </div>
-                  <Parameters
-                    listCampaings={listCampaigns}
-                    setListCampaignsList={setListCampaigns}
-                  />
+                  <Parameters setListCampaignsList={setListCampaigns} />
                 </div>
               </div>
 
@@ -93,7 +107,7 @@ const ExecutionPage: React.FC = () => {
               <h3 className="font-bold text-lg">Processos</h3>
               <RefreshCw
                 onClick={handleReloadProcessStatus}
-                className={`cursor-pointer ${isSpinning ? 'animate-spin' : ''}`}
+                className={`cursor-pointer ${isSpinning ? "animate-spin" : ""}`}
               ></RefreshCw>
             </div>
 
@@ -117,9 +131,12 @@ const ExecutionPage: React.FC = () => {
               </div>
             )}
           </section>
+          <div>
+            <button onClick={handleDownloadFile}>Baixar Arquivos</button>
 
-          <Footer />
-        </>
+            <iframe src={file} width="700" height="700"></iframe>
+          </div>
+        </PrivateLayout>
       ) : (
         <>
           <div className="max-w-max flex justify-center items-center mx-auto h-screen">
@@ -150,4 +167,4 @@ const ExecutionPage: React.FC = () => {
     </>
   );
 };
-export default ExecutionPage;
+export default TrainingPage;

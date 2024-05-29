@@ -1,17 +1,15 @@
-import { Play } from "react-feather";
-
-import Logo from "../../assets/Logo2.svg";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import "../../assets/css/header.css";
+import Logo from "../../assets/img/logoFaviconDark.svg";
 
 interface HeaderExecutionEnvironment {
   isExecutionEnvironment?: boolean;
-  menuActive?: string;
 }
 
 const Header: React.FC<HeaderExecutionEnvironment> = ({
   isExecutionEnvironment = false,
-  menuActive = "",
 }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [menuHamburguer, setMenuHamburguer] = useState(false);
@@ -124,54 +122,6 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
                   )}
                 </ul>
                 <div className="overlay"></div>
-                <style>{`
-              .hideMenuNav {
-                display: none;
-                
-              }
-              .showMenuNav {
-                display: block;
-                position: absolute;
-                width: 50%;
-                height: 100vh;
-                top: 0;
-                right:0;
-                background: #ffffff;
-                z-index: 10;
-                display: flex;
-                flex-direction: column;
-                //justify-content: start;
-                padding-top: 70px;
-                //align-items: center;
-                text-align:end;
-                transition: all;
-                transition-duration: 500ms;
-              }
-              .overlay {
-                position: fixed;
-                top: 0;
-                left: 0%; /* metade da tela */
-                width: 50%; /* metade da tela */
-                height: 100%;
-                background-color: rgba(124, 124, 124, 0.5); /* cor cinza com 50% de opacidade */
-                z-index: 5;
-              }
-              
-              .submenu {
-                width: 100%;
-                padding: 10px 0px 10px 10px;
-               
-
-              }
-              
-              .submenu li {
-                list-style-type: none;
-                padding: 5px 0;
-                cursor: pointer;
-                
-              }
-              
-            `}</style>
               </div>
             </section>
           </nav>
@@ -191,31 +141,16 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
                 <> </>
               ) : (
                 <>
-                  {" "}
-                  <Link
-                    to="/about/cgans"
-                    className={`${
-                      menuActive == "cgans" ? "font-bold border-b-2" : ""
-                    } `}
-                  >
+                  <Link to="/about/cgans" className={`hover:border-b-2 `}>
                     CGANs
                   </Link>
                   <Link
                     to="/about/droidaugmentor"
-                    className={`${
-                      menuActive == "droidaugmentor"
-                        ? "font-bold border-b-2"
-                        : ""
-                    } `}
+                    className={`hover:border-b-2 `}
                   >
                     DroidAugmentor
                   </Link>
-                  <Link
-                    to="/about/autodroid"
-                    className={`${
-                      menuActive == "autodroid" ? "font-bold border-b-2" : ""
-                    } `}
-                  >
+                  <Link to="/about/autodroid" className={`hover:border-b-2`}>
                     AutoDroid
                   </Link>
                 </>

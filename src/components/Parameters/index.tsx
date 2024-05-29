@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FormInput from "../FormInput/";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Campaign, ListCampaing } from "../../types";
+import { Campaign } from "../../types";
 
 interface Campaigns {
   [key: string]: Campaign;
@@ -16,7 +16,7 @@ const defaultCampaign: Campaign = {
   datasetSelected: new Blob([], { type: "application/octet-stream" }),
 };
 
-const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
+const Parameters = ({ setListCampaignsList }: any) => {
   const [campaigns, setCampaigns] = useState<Campaigns | null>(null); // campanhas que estão no json
   const [campaignSelected, setCampaignSelected] = useState<string>(""); // campanha que foi selecionado no select
   const [customParametersCampaing, setCustomParametersCampaing] =
@@ -93,7 +93,7 @@ const Parameters = ({ listCampaigns, setListCampaignsList }: any) => {
               />
             );
           } else {
-            return null; // Não renderiza o datasetSelected
+            return null; // nao renderiza o datasetSelected
           }
         })}
       </>
