@@ -9,11 +9,7 @@ import Parameters from "../../components/Parameters";
 import PredefinitionCampaing from "../../components/PredefinitionCampaing";
 import ProcessStatus from "../../components/ProcessStatus";
 
-import {
-  processingResult,
-  processingStatusToId,
-  registerUser,
-} from "../../services/services";
+import { processingStatusToId, registerUser } from "../../services/services";
 
 import { ListCampaing } from "../../types";
 
@@ -23,8 +19,6 @@ const TrainingPage: React.FC = () => {
   const [processStatus, setProcessStatus] = useState<any>();
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const [file, setFile] = useState<string | undefined>("");
-
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (userId) {
@@ -33,14 +27,7 @@ const TrainingPage: React.FC = () => {
       console.log(currentUserId);
     }
   }, []); // Executa apenas uma vez após a montagem do componente
-  /*
-  useEffect(() => {
-    const processStatusUpdate = async () => {
-      setProcessStatus(await processingStatusToId());
-    };
-    processStatusUpdate();
-  }, [processStatus]);
-*/
+
   const handleRegisterUser = async () => {
     await registerUser();
     setCurrentUserId(localStorage.getItem("userId"));
@@ -55,9 +42,6 @@ const TrainingPage: React.FC = () => {
     }, 1000);
   };
 
-  const handleDownloadFile = async () => {
-    setFile(await processingResult());
-  };
   return (
     <>
       {localStorage.getItem("userId") ? (
@@ -130,12 +114,14 @@ const TrainingPage: React.FC = () => {
                 <p className="font-semibold">Sem processo no momento! </p>
               </div>
             )}
-          </section>
-          <div>
-            <button onClick={handleDownloadFile}>Baixar Arquivos</button>
 
-            <iframe src={file} width="700" height="700"></iframe>
-          </div>
+            <div>
+              <button>
+                {" "}
+                <Link to={"/training/result"}>Baixar</Link>
+              </button>
+            </div>
+          </section>
         </PrivateLayout>
       ) : (
         <>
@@ -168,3 +154,11 @@ const TrainingPage: React.FC = () => {
   );
 };
 export default TrainingPage;
+/*
+  <div>
+            <button onClick={handleDownloadFile}>Baixar Arquivos</button>
+
+            <iframe src={file} width="700" height="700"></iframe>
+          </div>
+
+*/

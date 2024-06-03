@@ -1,0 +1,9 @@
+.react-pdf__Page__textContent, .react-pdf__Page__annotations{
+    display: none;
+}
+
+.react-pdf__Document{
+    display: flex;
+    border: 2px solid black;
+}
+

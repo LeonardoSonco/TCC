@@ -152,92 +152,46 @@ export const processingStatusToId = async () => {
   }
 };
 
-export const processingResult = async () => {
-  try {
-    const response = await axios.get(
-      `/api/processing/898ee5c4-d13e-4aa8-913d-5c1a47ad2edd/download/Comparison_Real_Synthetic.pdf`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("userId")}`,
-        },
-        responseType: "arraybuffer", //transforma o retorno em binario
-      }
-    );
-    const blob = new Blob([response.data], { type: "application/pdf" }); // cria um arquivo de dados do tipo pdf
-    const url = URL.createObjectURL(blob); // cria uma url para referencias o blob e assim permite exibir a imagem
+export const processingShowResult = async (processingId: string) => {
+  const files = [
+    "Comparison_Real_Synthetic.pdf",
+    "KNN_Real.pdf",
+    "KNN_Synthetic.pdf",
+    "confusion_matrix/CM_Real_KNN_k5.pdf",
+    "confusion_matrix/CM_Synthetic_KNN_k5.pdf",
+    "training_curve/curve_training_error_k_5.pdf",
+  ];
 
-    console.log(response);
-    return url;
+  console.log("Processing ID", processingId);
+
+  try {
+    const responses = await Promise.all(
+      files.map((file) =>
+        axios.get(`/api/processing/${processingId}/download/${file}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userId")}`,
+          },
+          responseType: "arraybuffer", //transforma o retorno em binario para facilitar a manipulçao (PDF e Img)
+        })
+      )
+    );
+
+    const urls = responses.map((response) => {
+      const blob = new Blob([response.data], { type: "application/pdf" }); // cria um arquivo de dados do tipo pdf
+      return URL.createObjectURL(blob); // cria uma url para referenciar o blob e assim permite exibir a imagem
+    });
+
+    return urls;
   } catch (error) {
     console.error("Failed to processing result:", error);
   }
 };
-/* Apenas os resultados que possuem .pdf 
-"AdaBoost_Real.pdf"
-"AdaBoost_Synthetic.pdf"
-"Comparison_Real_Synthetic.pdf"
-"DecisionTree_Real.pdf"
-"DecisionTree_Synthetic.pdf"
-"KNN_Real.pdf"
-"KNN_Synthetic.pdf"
-"RandomForest_Real.pdf"
-"RandomForest_Synthetic.pdf"
-"SupportVectorMachine_Real.pdf"
-"SupportVectorMachine_Synthetic.pdf"
-"confusion_matrix/CM_Real_AdaBoost_k1.pdf"
-"confusion_matrix/CM_Real_AdaBoost_k2.pdf"
-"confusion_matrix/CM_Real_AdaBoost_k3.pdf"
-"confusion_matrix/CM_Real_AdaBoost_k4.pdf"
-"confusion_matrix/CM_Real_AdaBoost_k5.pdf"
-"confusion_matrix/CM_Real_DecisionTree_k1.pdf"
-"confusion_matrix/CM_Real_DecisionTree_k2.pdf"
-"confusion_matrix/CM_Real_DecisionTree_k3.pdf"
-"confusion_matrix/CM_Real_DecisionTree_k4.pdf"
-"confusion_matrix/CM_Real_DecisionTree_k5.pdf"
-"confusion_matrix/CM_Real_KNN_k1.pdf"
-"confusion_matrix/CM_Real_KNN_k2.pdf"
-"confusion_matrix/CM_Real_KNN_k3.pdf"
-"confusion_matrix/CM_Real_KNN_k4.pdf"
-"confusion_matrix/CM_Real_KNN_k5.pdf"
-"confusion_matrix/CM_Real_RandomForest_k1.pdf"
-"confusion_matrix/CM_Real_RandomForest_k2.pdf"
-"confusion_matrix/CM_Real_RandomForest_k3.pdf"
-"confusion_matrix/CM_Real_RandomForest_k4.pdf"
-"confusion_matrix/CM_Real_RandomForest_k5.pdf"
-"confusion_matrix/CM_Real_SupportVectorMachine_k1.pdf"
-"confusion_matrix/CM_Real_SupportVectorMachine_k2.pdf"
-"confusion_matrix/CM_Real_SupportVectorMachine_k3.pdf"
-"confusion_matrix/CM_Real_SupportVectorMachine_k4.pdf"
-"confusion_matrix/CM_Real_SupportVectorMachine_k5.pdf"
-"confusion_matrix/CM_Synthetic_AdaBoost_k1.pdf"
-"confusion_matrix/CM_Synthetic_AdaBoost_k2.pdf"
-"confusion_matrix/CM_Synthetic_AdaBoost_k3.pdf"
-"confusion_matrix/CM_Synthetic_AdaBoost_k4.pdf"
-"confusion_matrix/CM_Synthetic_AdaBoost_k5.pdf"
-"confusion_matrix/CM_Synthetic_DecisionTree_k1.pdf"
-"confusion_matrix/CM_Synthetic_DecisionTree_k2.pdf"
-"confusion_matrix/CM_Synthetic_DecisionTree_k3.pdf"
-"confusion_matrix/CM_Synthetic_DecisionTree_k4.pdf"
-"confusion_matrix/CM_Synthetic_DecisionTree_k5.pdf"
-"confusion_matrix/CM_Synthetic_KNN_k1.pdf"
-"confusion_matrix/CM_Synthetic_KNN_k2.pdf"
-"confusion_matrix/CM_Synthetic_KNN_k3.pdf"
-"confusion_matrix/CM_Synthetic_KNN_k4.pdf"
-"confusion_matrix/CM_Synthetic_KNN_k5.pdf"
-"confusion_matrix/CM_Synthetic_RandomForest_k1.pdf"
-"confusion_matrix/CM_Synthetic_RandomForest_k2.pdf"
-"confusion_matrix/CM_Synthetic_RandomForest_k3.pdf"
-"confusion_matrix/CM_Synthetic_RandomForest_k4.pdf"
-"confusion_matrix/CM_Synthetic_RandomForest_k5.pdf"
-"confusion_matrix/CM_Synthetic_SupportVectorMachine_k1.pdf"
-"confusion_matrix/CM_Synthetic_SupportVectorMachine_k2.pdf"
-"confusion_matrix/CM_Synthetic_SupportVectorMachine_k3.pdf"
-"confusion_matrix/CM_Synthetic_SupportVectorMachine_k4.pdf"
-"confusion_matrix/CM_Synthetic_SupportVectorMachine_k5.pdf"
-"training_curve/curve_training_error_k_1.pdf"
-"training_curve/curve_training_error_k_2.pdf"
-"training_curve/curve_training_error_k_3.pdf"
-"training_curve/curve_training_error_k_4.pdf"
-"training_curve/curve_training_error_k_5.pdf"
 
-*/
+/*
+Dados para serem exibidas:
+Comparison_Real_Synthetic.pdf
+KNN_Real.pdf
+KNN_Synthetic.pdf
+confusion_matrix/CM_Real_KNN_k5.pdf
+confusion_matrix/CM_Synthetic_KNN_k5.pdf
+training_curve/curve_training_error_k_5.pdf */
