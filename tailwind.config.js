@@ -23,7 +23,11 @@ module.exports = {
       },
       fontFamily: {
         'goldman': ['"Goldman", sans-serif']
+      },
+      scale: {
+        '101': '1.01'
       }
+
     },
   },
   plugins: [

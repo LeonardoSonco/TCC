@@ -22,6 +22,9 @@ const Parameters = ({ setListCampaignsList }: any) => {
   const [customParametersCampaing, setCustomParametersCampaing] =
     useState<Campaign>(defaultCampaign);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [fileSelected, setFileSelected] = useState<boolean>(false);
+
+  const [inputErrors, setInputErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,17 +46,38 @@ const Parameters = ({ setListCampaignsList }: any) => {
   }, []);
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCampaignSelected(event.target.value);
+    event.preventDefault();
+    const errors: Record<string, string> = {};
+    if (event.target.value) {
+      setCampaignSelected(event.target.value);
 
-    if (event.target.value != "customize" && campaigns) {
-      setCustomParametersCampaing(campaigns[event.target.value]);
-    } else if (event.target.value === "customize" && campaigns) {
-      setCustomParametersCampaing(defaultCampaign);
+      if (event.target.value != "customize" && campaigns) {
+        setCustomParametersCampaing(campaigns[event.target.value]);
+      } else if (event.target.value === "customize" && campaigns) {
+        setCustomParametersCampaing(defaultCampaign);
+      }
     }
   };
 
-  const handleAddCampaign = () => {
-    if (campaigns && campaignSelected) {
+  const handleAddCampaign = (event: React.FormEvent) => {
+    event.preventDefault();
+    const errors: Record<string, string> = {};
+
+    if (!campaignSelected) {
+      errors.selectInput = "Necessário selecionar uma campanha!";
+    }
+    if (!fileSelected) {
+      errors.fileInput = "Necessário selecionar um conjunto de dados!";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setInputErrors(errors);
+      return;
+    } else {
+      setInputErrors({});
+    }
+
+    if (campaigns) {
       const campaignList = {
         name: campaignSelected,
         parameters: customParametersCampaing,
@@ -66,6 +90,8 @@ const Parameters = ({ setListCampaignsList }: any) => {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
+      setCampaignSelected("");
+      setFileSelected(false);
     }
   };
 
@@ -103,11 +129,13 @@ const Parameters = ({ setListCampaignsList }: any) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-
+      setFileSelected(true);
       setCustomParametersCampaing((prevCampaing) => ({
         ...prevCampaing,
         datasetSelected: file,
       }));
+    } else {
+      setFileSelected(false);
     }
   };
 
@@ -116,40 +144,47 @@ const Parameters = ({ setListCampaignsList }: any) => {
       <div>
         {campaigns ? (
           <>
-            <div className="flex justify-between items-center">
-              <h4 className="mr-3 px-1 font-bold">Campanhas Disponíveis</h4>
-              <FormControl
-                sx={{
-                  m: 1,
-                  minWidth: 120,
-                  maxWidth: 128,
-                  margin: 0,
-                  marginY: 1,
-                }}
-                size="small"
-              >
-                <InputLabel id="demo-simple-select-label">Campanha</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={campaignSelected}
-                  label="Campanhas"
-                  onChange={(event: any) => handleSelectChange(event)}
-                  className="h-10"
+            <form className={`text-center`}>
+              <div className="flex justify-between items-center">
+                <h4 className="mr-3 px-1 font-bold">Campanhas Disponíveis</h4>
+                <FormControl
+                  sx={{
+                    m: 1,
+                    minWidth: 120,
+                    maxWidth: 128,
+                    margin: 0,
+                    marginY: 1,
+                  }}
+                  size="small"
                 >
-                  {Object.keys(campaigns).map((key) => (
-                    <MenuItem key={key} value={key}>
-                      {key}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+                  <InputLabel id="demo-simple-select-label">
+                    Campanha
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={campaignSelected}
+                    label="Campanhas"
+                    onChange={(event: any) => handleSelectChange(event)}
+                    className="h-10"
+                  >
+                    {Object.keys(campaigns).map((key) => (
+                      <MenuItem key={key} value={key}>
+                        {key}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
 
-            {campaignSelected &&
-              renderInputParametersCampaign(customParametersCampaing)}
-            <div className="my-10">
-              <form className={`px-2`}>
+              {campaignSelected &&
+                renderInputParametersCampaign(customParametersCampaing)}
+              {inputErrors.selectInput && (
+                <p className="text-red-500 text-xs italic mt-1">
+                  {inputErrors.selectInput}
+                </p>
+              )}
+              <div className="mt-5">
                 <label className="text-base font-medium" htmlFor="fileInput">
                   Carregue seu conjunto de dados
                 </label>
@@ -161,21 +196,27 @@ const Parameters = ({ setListCampaignsList }: any) => {
                   ref={fileInputRef}
                   accept=".csv"
                 />
+                {inputErrors.fileInput && (
+                  <p className="text-red-500 text-xs italic mt-1">
+                    {inputErrors.fileInput}
+                  </p>
+                )}
 
                 <div className="mt-1 text-sm text-gray-500">
                   Tipos de extensão: .csv
                 </div>
-              </form>
-            </div>
+              </div>
 
-            <div className="text-center">
-              <button
-                onClick={handleAddCampaign}
-                className="border-2 bg-black_button text-white w-72 py-2 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg"
-              >
-                Adicionar Predefinição
-              </button>
-            </div>
+              <div className="text-center mt-10">
+                <button
+                  type="button"
+                  onClick={handleAddCampaign}
+                  className="border-2 bg-black_button text-white w-72 py-2 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg"
+                >
+                  Adicionar Predefinição
+                </button>
+              </div>
+            </form>
           </>
         ) : (
           <p>Carregando...</p>

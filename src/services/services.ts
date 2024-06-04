@@ -142,7 +142,7 @@ export const processingStatusToId = async () => {
         processStatusMap[result.name].push(result.data); // adiciona o valor ao array
       });
 
-      console.log(processStatusMap);
+      //console.log(processStatusMap);
       return processStatusMap;
     } else {
       console.log("Nenhum ID de processo encontrado.");
@@ -162,7 +162,7 @@ export const processingShowResult = async (processingId: string) => {
     "training_curve/curve_training_error_k_5.pdf",
   ];
 
-  console.log("Processing ID", processingId);
+  //console.log("Processing ID", processingId);
 
   try {
     const responses = await Promise.all(

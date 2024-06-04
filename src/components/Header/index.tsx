@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import "../../assets/css/header.css";
 import Logo from "../../assets/img/logoFaviconDark.svg";
+import { ArrowLeft, ArrowLeftCircle } from "react-feather";
 
 interface HeaderExecutionEnvironment {
   isExecutionEnvironment?: boolean;
@@ -138,7 +139,10 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
           <nav>
             <ul className="flex items-center gap-10 font-medium">
               {isExecutionEnvironment ? (
-                <> </>
+                <>
+
+                  
+                </>
               ) : (
                 <>
                   <Link to="/about/cgans" className={`hover:border-b-2 `}>

@@ -46,7 +46,7 @@ const TrainingPage: React.FC = () => {
     <>
       {localStorage.getItem("userId") ? (
         <PrivateLayout>
-          <section className="mx-10 mb-10">
+          <section className="mx-16 mb-10">
             {currentUserId ? (
               <p className="mb-8 font-semibold">
                 ID do Usuário: {currentUserId}
@@ -67,14 +67,14 @@ const TrainingPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className=" flex flex-col justify-center min-w-80 max-sm+:max-w-lg max-sm+:mx-auto max-sm+:w-11/12 max-sm+:mt-10 max-sm+:min-w-44">
+              <div className=" flex flex-col justify-center min-w-96  max-sm+:max-w-lg max-sm+:mx-auto max-sm+:w-11/12 max-sm+:mt-10 max-sm+:min-w-44">
                 <div className="w-full h-7 pl-4 bg-black flex items-end rounded-t-xl">
                   <h4 className="text-white font-semibold text-lg">
                     Predefinição de parâmetros{" "}
                   </h4>
                 </div>
 
-                <div className="shadow-shadowBox rounded-xl rounded-t-none h-5/6 py-5  ">
+                <div className="shadow-shadowBox rounded-xl rounded-t-none h-5/6 py-5 min-h-96">
                   <PredefinitionCampaing
                     listCampaings={listCampaigns}
                     setListCampaigns={setListCampaigns}
@@ -86,9 +86,9 @@ const TrainingPage: React.FC = () => {
             </div>
           </section>
 
-          <section className="mx-10 ">
-            <div className="flex justify-between mx-10 mb-5">
-              <h3 className="font-bold text-lg">Processos</h3>
+          <section className="shadow-shadowBox rounded-lg max-w-7xl mx-auto pb-4">
+            <div className="flex justify-between pt-8 pb-4 mx-12 ">
+              <h3 className="font-bold text-xl">Processos</h3>
               <RefreshCw
                 onClick={handleReloadProcessStatus}
                 className={`cursor-pointer ${isSpinning ? "animate-spin" : ""}`}
@@ -110,17 +110,10 @@ const TrainingPage: React.FC = () => {
                 })}
               </>
             ) : (
-              <div className="flex justify-center mb-10">
-                <p className="font-semibold">Sem processo no momento! </p>
+              <div className="flex justify-center mb-5 ">
+                <p className="font-semibold">Sem processos no momento! </p>
               </div>
             )}
-
-            <div>
-              <button>
-                {" "}
-                <Link to={"/training/result"}>Baixar</Link>
-              </button>
-            </div>
           </section>
         </PrivateLayout>
       ) : (
@@ -154,11 +147,3 @@ const TrainingPage: React.FC = () => {
   );
 };
 export default TrainingPage;
-/*
-  <div>
-            <button onClick={handleDownloadFile}>Baixar Arquivos</button>
-
-            <iframe src={file} width="700" height="700"></iframe>
-          </div>
-
-*/
