@@ -34,7 +34,7 @@ const FormInput: React.FC<NumericTypeParametersProps> = ({
 
   return (
     <>
-      <div className={`flex items-center py-1 justify-between max-xs:flex-col`}>
+      <div className={`flex items-center py-1 justify-between max-xs+:flex-col`}>
         <div className="flex items-center">
           <h4 className="mr-3 px-1 font-bold">{label}</h4>
         </div>

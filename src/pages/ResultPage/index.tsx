@@ -8,6 +8,9 @@ import { pdfjs } from "react-pdf";
 import { ArrowLeftCircle, Download } from "react-feather";
 import { useParams } from "react-router";
 import { Box, CircularProgress } from "@mui/material";
+import { ProcessingResultType } from "../../types";
+
+import Carousel from "../../components/Carousel";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
@@ -16,7 +19,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 const ResultPage = () => {
   const processingId = useParams<{ name: string; id: string }>();
-  const [files, setFiles] = useState<string[]>([]);
+  const [files, setFiles] = useState<ProcessingResultType>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -27,9 +30,10 @@ const ResultPage = () => {
         const result = await processingShowResult(processingId.id);
         if (result) {
           setFiles(result);
+          setIsLoading(false);
         }
       }
-      setIsLoading(false);
+      //setIsLoading(false);
     };
 
     handleFile();
@@ -45,7 +49,7 @@ const ResultPage = () => {
         </div>
       ) : (
         files && (
-          <section className="flex flex-col justify-center items-center">
+          <section className="flex flex-col justify-center items-center w-screen">
             <div className="flex flex-col justify-center items-center">
               <div className="flex items-center gap-4">
                 {" "}
@@ -65,56 +69,9 @@ const ResultPage = () => {
               </div>
             </div>
 
-            <div className="max-w-4xl mx-5 my-4">
-              <h3 className="font-bold">Métricas de Similaridade</h3>
-              <p>
-                Essas métricas permitem verificar se os dados gerados são
-                diferentes dos dados originais e, ao mesmo tempo, seguem o mesmo
-                padrão estatístico.
-              </p>
-            </div>
-            <PdfDocument pdfFile={files[0]}></PdfDocument>
-
-            <div className="max-w-4xl mx-5 my-4 mt-10">
-              <h3 className="font-bold">Métricas de Aplicabilidade</h3>
-              <p>
-                Ao verificar se os classificadores são capazes de classificar os
-                dados sintéticos de maneira similar aos dados reais, pode-se
-                inferir que os dados sintéticos são realistas e adequados.
-              </p>
-            </div>
-            <div className="flex gap-4 max-sm++:flex-col">
-              <PdfDocument
-                pdfFile={files[1]}
-                doubleImage={"teste"}
-              ></PdfDocument>
-              <PdfDocument
-                pdfFile={files[2]}
-                doubleImage={"true"}
-              ></PdfDocument>
-            </div>
-
-            <div className="max-w-4xl mx-5 my-4 mt-10">
-              <h3 className="font-bold">Matrizes de Confusão</h3>
-              <p>
-                Ajuda a entender como o modelo está se saindo em relação a
-                classificação das categorias de interesse, quanto mais parecidas
-                com o real, maior é a qualidade dos dados.
-              </p>
-            </div>
-            <div className="flex gap-4 max-sm++:flex-col">
-              <PdfDocument
-                pdfFile={files[3]}
-                doubleImage={"true"}
-              ></PdfDocument>
-              <PdfDocument
-                pdfFile={files[4]}
-                doubleImage={"true"}
-              ></PdfDocument>
-            </div>
             <div className="max-w-4xl mx-5 my-4 mt-10">
               <h3 className="font-bold"> Curva de Treinamento</h3>
-              <p>
+              <p className="px-2">
                 A figura mostra a interação entre o gerador e o discriminador em
                 uma cGAN durante o aprendizado. O gerador tenta criar amostras
                 que enganem o discriminador, enquanto o discriminador melhora
@@ -125,8 +82,55 @@ const ResultPage = () => {
                 diminuir e estabilizar ao longo do tempo.
               </p>
             </div>
+            <Carousel fileOne={files.filesTrainingCurve}></Carousel>
 
-            <PdfDocument pdfFile={files[5]}></PdfDocument>
+            <div className="max-w-4xl mx-5 my-4">
+              <h3 className="font-bold">Métricas de Similaridade</h3>
+              <p className="px-2">
+                Essas métricas permitem verificar se os dados gerados são
+                diferentes dos dados originais e, ao mesmo tempo, seguem o mesmo
+                padrão estatístico.
+              </p>
+            </div>
+            <PdfDocument pdfFile={files.fileComparison[0]}></PdfDocument>
+
+            <div className="max-w-4xl mx-5 my-4 mt-10">
+              <h3 className="font-bold">Métricas de Aplicabilidade</h3>
+              <p className="px-2">
+                Ao verificar se os classificadores são capazes de classificar os
+                dados sintéticos de maneira similar aos dados reais, pode-se
+                inferir que os dados sintéticos são realistas e adequados.
+              </p>
+              <div className="flex justify-center items-center text-center gap-4 max-sm++:flex-col mt-4 ">
+                <div>
+                  <PdfDocument
+                    pdfFile={files.fileKNN_Real[0]}
+                    doubleImage={true}
+                  ></PdfDocument>
+                  <h3>KNN_Real</h3>
+                </div>
+                <div>
+                  <PdfDocument
+                    pdfFile={files.fileKNN_Synth[0]}
+                    doubleImage={true}
+                  ></PdfDocument>
+                  <h3>KNN_Synthetic</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-5 my-4 mt-10">
+              <h3 className="font-bold">Matrizes de Confusão</h3>
+              <p className="px-2">
+                Ajuda a entender como o modelo está se saindo em relação a
+                classificação das categorias de interesse, quanto mais parecidas
+                com o real, maior é a qualidade dos dados.
+              </p>
+            </div>
+            <Carousel
+              fileOne={files.filesConfusionMatrixReal}
+              fileTwo={files.filesConfusionMatrixSynthetic}
+            ></Carousel>
           </section>
         )
       )}

@@ -213,7 +213,7 @@ const Parameters = ({ setListCampaignsList }: any) => {
                   onClick={handleAddCampaign}
                   className="border-2 bg-black_button text-white w-72 py-2 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg"
                 >
-                  Adicionar Predefinição
+                  Adicionar
                 </button>
               </div>
             </form>

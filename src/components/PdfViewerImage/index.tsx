@@ -8,7 +8,7 @@ import debounce from "lodash.debounce";
 import "./index.css";
 
 interface PdfDocumentProps {
-  doubleImage?: string;
+  doubleImage?: boolean;
   pdfFile?: any;
 }
 
@@ -28,11 +28,11 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({
       const windowWidth = window.innerWidth;
 
       if (windowWidth > 1250) {
-        setPdfFileScale(2.5);
-        setPdfFileWidth(doubleImage ? 350 / 1.5 : 350);
+        setPdfFileScale(2.1);
+        setPdfFileWidth(doubleImage ? 350 / 1.7 : 350);
       } else if (windowWidth > 1200) {
         setPdfFileScale(2.5);
-        
+
         setPdfFileWidth(doubleImage ? 350 / 2 : 350);
       } else if (windowWidth > 950) {
         setPdfFileScale(2);

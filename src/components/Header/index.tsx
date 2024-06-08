@@ -50,7 +50,7 @@ const Header: React.FC<HeaderExecutionEnvironment> = ({
     <>
       {menuHamburguer ? (
         <header
-          className={`flex bg-gray_header justify-between items-center px-11 pt-5 pb-3 animate-fade animate-once animate-ease-in animate-delay-150
+          className={`flex bg-gray_header justify-between items-center px-11 pt-5 pb-3 animate-fade animate-once animate-ease-in animate-delay-150 max-xs:px-5
           ${isNavOpen ? "showMenu " : ""}
         `}
         >

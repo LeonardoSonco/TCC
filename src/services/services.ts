@@ -3,6 +3,7 @@ import {
   dividirStringParaObjeto,
   extrairConteudoEntreAspas,
 } from "../utils/stringFunctions";
+import { createUrls, downloadFiles } from "../utils/downloadFilesResult";
 
 export const registerUser = async () => {
   try {
@@ -142,7 +143,7 @@ export const processingStatusToId = async () => {
         processStatusMap[result.name].push(result.data); // adiciona o valor ao array
       });
 
-      //console.log(processStatusMap);
+      console.log(processStatusMap);
       return processStatusMap;
     } else {
       console.log("Nenhum ID de processo encontrado.");
@@ -153,41 +154,58 @@ export const processingStatusToId = async () => {
 };
 
 export const processingShowResult = async (processingId: string) => {
-  const files = [
-    "Comparison_Real_Synthetic.pdf",
-    "KNN_Real.pdf",
-    "KNN_Synthetic.pdf",
-    "confusion_matrix/CM_Real_KNN_k5.pdf",
-    "confusion_matrix/CM_Synthetic_KNN_k5.pdf",
-    "training_curve/curve_training_error_k_5.pdf",
-  ];
+  const filesCategories = {
+    fileKNN_Real: ["KNN_Real.pdf"],
 
-  //console.log("Processing ID", processingId);
+    fileKNN_Synth: ["KNN_Synthetic.pdf"],
+
+    fileComparison: ["Comparison_Real_Synthetic.pdf"],
+
+    filesConfusionMatrixReal: [
+      "confusion_matrix/CM_Real_KNN_k1.pdf",
+      "confusion_matrix/CM_Real_KNN_k2.pdf",
+      "confusion_matrix/CM_Real_KNN_k3.pdf",
+      "confusion_matrix/CM_Real_KNN_k4.pdf",
+      "confusion_matrix/CM_Real_KNN_k5.pdf",
+    ],
+    filesConfusionMatrixSynthetic: [
+      "confusion_matrix/CM_Synthetic_KNN_k1.pdf",
+      "confusion_matrix/CM_Synthetic_KNN_k2.pdf",
+      "confusion_matrix/CM_Synthetic_KNN_k3.pdf",
+      "confusion_matrix/CM_Synthetic_KNN_k4.pdf",
+      "confusion_matrix/CM_Synthetic_KNN_k5.pdf",
+    ],
+    filesTrainingCurve: [
+      "training_curve/curve_training_error_k_1.pdf",
+      "training_curve/curve_training_error_k_2.pdf",
+      "training_curve/curve_training_error_k_3.pdf",
+      "training_curve/curve_training_error_k_4.pdf",
+      "training_curve/curve_training_error_k_5.pdf",
+    ],
+  };
 
   try {
-    const responses = await Promise.all(
-      files.map((file) =>
-        axios.get(`/api/processing/${processingId}/download/${file}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userId")}`,
-          },
-          responseType: "arraybuffer", //transforma o retorno em binario para facilitar a manipulçao (PDF e Img)
-        })
-      )
+    const teste = await Promise.all(
+      Object.entries(filesCategories).map(async ([key, files]) => {
+        const responses = await downloadFiles(files, processingId);
+        const urls = createUrls(responses);
+        return [key, urls];
+      })
     );
+    //console.log(Object.fromEntries(teste));
 
-    const urls = responses.map((response) => {
-      const blob = new Blob([response.data], { type: "application/pdf" }); // cria um arquivo de dados do tipo pdf
-      return URL.createObjectURL(blob); // cria uma url para referenciar o blob e assim permite exibir a imagem
-    });
-
-    return urls;
+    return Object.fromEntries(teste);
+    //return urls;
   } catch (error) {
     console.error("Failed to processing result:", error);
   }
 };
 
 /*
+Pegar de todas as dobras(Ideia: COLOCAR UM CARROSEL DAS DOBRAS)
+
+"synthetic_data_fold_5.csv" dataset para baixar pro pc
+
 Dados para serem exibidas:
 Comparison_Real_Synthetic.pdf
 KNN_Real.pdf

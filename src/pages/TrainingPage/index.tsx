@@ -46,7 +46,7 @@ const TrainingPage: React.FC = () => {
     <>
       {localStorage.getItem("userId") ? (
         <PrivateLayout>
-          <section className="mx-16 mb-10">
+          <section className="mx-16 mb-10 max-sm+:mx-5">
             {currentUserId ? (
               <p className="mb-8 font-semibold">
                 ID do Usuário: {currentUserId}
@@ -57,7 +57,7 @@ const TrainingPage: React.FC = () => {
 
             <div className="flex justify-around gap-4 max-sm+:flex max-sm+:flex-col max-sm+:justify-center">
               <div className="shadow-shadowBox rounded-xl justify-self-center max-sm+:w-11/12 max-sm+:max-w-lg max-sm+:mx-auto">
-                <div className="flex flex-col justify-center items-center px-10">
+                <div className="flex flex-col justify-center items-center px-10 max-xs:px-4">
                   <div className="pt-5 w-full flex justify-center">
                     <h3 className="font-bold text-xl  max-sm+:pl-0 max-xs:text-lg">
                       Parâmetros de Treinamento
@@ -68,9 +68,9 @@ const TrainingPage: React.FC = () => {
               </div>
 
               <div className=" flex flex-col justify-center min-w-96  max-sm+:max-w-lg max-sm+:mx-auto max-sm+:w-11/12 max-sm+:mt-10 max-sm+:min-w-44">
-                <div className="w-full h-7 pl-4 bg-black flex items-end rounded-t-xl">
+                <div className="w-full py-2 pl-4 bg-black flex items-end rounded-t-xl">
                   <h4 className="text-white font-semibold text-lg">
-                    Predefinição de parâmetros{" "}
+                    Campanhas Selecionadas{" "}
                   </h4>
                 </div>
 
@@ -86,7 +86,7 @@ const TrainingPage: React.FC = () => {
             </div>
           </section>
 
-          <section className="shadow-shadowBox rounded-lg max-w-7xl mx-auto pb-4">
+          <section className="shadow-shadowBox rounded-lg max-w-7xl mx-auto pb-4 max-sm+:mx-5">
             <div className="flex justify-between pt-8 pb-4 mx-12 ">
               <h3 className="font-bold text-xl">Processos</h3>
               <RefreshCw
