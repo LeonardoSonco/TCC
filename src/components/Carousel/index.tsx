@@ -48,7 +48,7 @@ const Carousel = ({ fileOne, fileTwo = [] }: any) => {
     <Swiper
       className="myswiper mx-5"
       pagination={{ clickable: true }}
-      modules={[Navigation, Pagination,Autoplay]}
+      modules={[Navigation, Pagination, Autoplay]}
       autoplay={{
         delay: 5000,
         disableOnInteraction: false,

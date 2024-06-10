@@ -22,3 +22,25 @@ export type ProcessingResultType = {
   filesConfusionMatrixSynthetic: string[],
   filesTrainingCurve: string[]
 };
+
+
+export interface ParametersDefault {
+  activation_function: string;
+  batch_size: string;
+  data_type: string;
+  dropout_decay_rate_d: string;
+  dropout_decay_rate_g: string;
+  initializer_deviation: string;
+  initializer_mean: string;
+  k_fold: string;
+  latent_dimension: string;
+  latent_mean_distribution: string;
+  latent_stander_deviation: string;
+  num_samples_class_benign: string;
+  num_samples_class_malware: string;
+  number_epochs: string;
+  path_confusion_matrix: string;
+  path_curve_loss: string;
+  save_models: string;
+  training_algorithm: string;
+}

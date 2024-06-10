@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import PrivateLayout from "../../layouts/Private";
 import { processingShowResult } from "../../services/services";
 
@@ -8,7 +8,7 @@ import { pdfjs } from "react-pdf";
 import { ArrowLeftCircle, Download } from "react-feather";
 import { useParams } from "react-router";
 import { Box, CircularProgress } from "@mui/material";
-import { ProcessingResultType } from "../../types";
+import { ParametersDefault, ProcessingResultType } from "../../types";
 
 import Carousel from "../../components/Carousel";
 
@@ -17,10 +17,39 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
+interface Parameters {
+  [key: string]: ReactNode;
+}
+
 const ResultPage = () => {
   const processingId = useParams<{ name: string; id: string }>();
   const [files, setFiles] = useState<ProcessingResultType>();
+  const [parameters, setParameters] = useState<Parameters>();
+  const [parametersDefault, setParametersDefault] =
+    useState<ParametersDefault>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/parametersDefault.json",
+          {
+            headers: {
+              accept: "application/json",
+              "User-agent": "learning app",
+            },
+          }
+        );
+        const data: ParametersDefault = await response.json();
+        setParametersDefault(data);
+      } catch (error) {
+        console.error("Erro ao buscar JSON:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const handleFile = async () => {
@@ -28,17 +57,21 @@ const ResultPage = () => {
 
       if (processingId.id) {
         const result = await processingShowResult(processingId.id);
-        if (result) {
-          setFiles(result);
+
+        if (result && result.imagesObject) {
+          setFiles(result.imagesObject);
+          setParameters(result.selectedResultParameters);
           setIsLoading(false);
         }
       }
       //setIsLoading(false);
+      // Adicionar que deu errado o carregamento
     };
 
     handleFile();
   }, [processingId]);
 
+ 
   return (
     <PrivateLayout>
       {isLoading ? (
@@ -49,9 +82,9 @@ const ResultPage = () => {
         </div>
       ) : (
         files && (
-          <section className="flex flex-col justify-center items-center w-screen">
-            <div className="flex flex-col justify-center items-center">
-              <div className="flex items-center gap-4">
+          <section className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center mt-4 mb-8">
+              <div className="flex items-center gap-4 mx-4">
                 {" "}
                 <ArrowLeftCircle
                   size={35}
@@ -63,14 +96,47 @@ const ResultPage = () => {
                 </h2>
               </div>
 
-              <div className="flex gap-4 items-center cursor-pointer">
+              <div className="flex gap-4 items-center cursor-pointer mt-2">
                 <span>Baixar dataset</span>
                 <Download></Download>
               </div>
             </div>
 
+            <div className="flex flex-col w-full max-w-4xl mx-auto max-sm++:w-11/12">
+              <h3 className="font-bold text-xl mb-4">
+                {" "}
+                Configurações utilizadas
+              </h3>
+
+              <div className="bg-light_gray px-5 py-2 rounded-xl">
+                <h4 className="font-medium text-lg">Parametros customizados</h4>
+                <div className="px-4">
+                  {parameters &&
+                    Object.entries(parameters).map(([key, value]) => (
+                      <>
+                        <p key={key} className="py-1 font-light">
+                          <span className="font-normal">{key}:</span> {value}
+                        </p>
+                      </>
+                    ))}
+                </div>
+
+                <h4 className="mt-5 font-medium text-lg">Parametros fixos</h4>
+                <div className="grid grid-cols-2 px-4 max-sm:flex max-sm:flex-col">
+                  {parametersDefault &&
+                    Object.entries(parametersDefault).map(([key, value]) => (
+                      <>
+                        <p key={key} className="py-1 font-light">
+                          <span className="font-normal">{key}:</span> {value}
+                        </p>
+                      </>
+                    ))}
+                </div>
+              </div>
+            </div>
+
             <div className="max-w-4xl mx-5 my-4 mt-10">
-              <h3 className="font-bold"> Curva de Treinamento</h3>
+              <h3 className="font-bold text-xl"> Curva de Treinamento</h3>
               <p className="px-2">
                 A figura mostra a interação entre o gerador e o discriminador em
                 uma cGAN durante o aprendizado. O gerador tenta criar amostras
@@ -85,7 +151,7 @@ const ResultPage = () => {
             <Carousel fileOne={files.filesTrainingCurve}></Carousel>
 
             <div className="max-w-4xl mx-5 my-4">
-              <h3 className="font-bold">Métricas de Similaridade</h3>
+              <h3 className="font-bold text-xl">Métricas de Similaridade</h3>
               <p className="px-2">
                 Essas métricas permitem verificar se os dados gerados são
                 diferentes dos dados originais e, ao mesmo tempo, seguem o mesmo
@@ -95,7 +161,7 @@ const ResultPage = () => {
             <PdfDocument pdfFile={files.fileComparison[0]}></PdfDocument>
 
             <div className="max-w-4xl mx-5 my-4 mt-10">
-              <h3 className="font-bold">Métricas de Aplicabilidade</h3>
+              <h3 className="font-bold text-xl">Métricas de Aplicabilidade</h3>
               <p className="px-2">
                 Ao verificar se os classificadores são capazes de classificar os
                 dados sintéticos de maneira similar aos dados reais, pode-se
@@ -120,7 +186,7 @@ const ResultPage = () => {
             </div>
 
             <div className="max-w-4xl mx-5 my-4 mt-10">
-              <h3 className="font-bold">Matrizes de Confusão</h3>
+              <h3 className="font-bold text-xl">Matrizes de Confusão</h3>
               <p className="px-2">
                 Ajuda a entender como o modelo está se saindo em relação a
                 classificação das categorias de interesse, quanto mais parecidas

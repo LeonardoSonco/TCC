@@ -109,7 +109,7 @@ const datasetProcessing = async (
   }
 };
 
-export const processingStatusToId = async () => {
+export const processingStatus = async () => {
   try {
     const processosIds = localStorage.getItem("processIds");
 
@@ -153,6 +153,19 @@ export const processingStatusToId = async () => {
   }
 };
 
+const processingParametersToId = async (processingId: string) => {
+  try {
+    const response = await axios.get(`/api/processing/${processingId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("userId")}`,
+      },
+    });
+    return response.data.processing.params;
+  } catch (error) {
+    console.error("Failed to process parameters:", error);
+  }
+};
+
 export const processingShowResult = async (processingId: string) => {
   const filesCategories = {
     fileKNN_Real: ["KNN_Real.pdf"],
@@ -185,16 +198,21 @@ export const processingShowResult = async (processingId: string) => {
   };
 
   try {
-    const teste = await Promise.all(
+    const images = await Promise.all(
       Object.entries(filesCategories).map(async ([key, files]) => {
         const responses = await downloadFiles(files, processingId);
         const urls = createUrls(responses);
+
         return [key, urls];
       })
     );
-    //console.log(Object.fromEntries(teste));
-
-    return Object.fromEntries(teste);
+   
+    const selectedResultParameters = await processingParametersToId(
+      processingId
+    );
+    const imagesObject = Object.fromEntries(images)
+    
+    return {imagesObject, selectedResultParameters};
     //return urls;
   } catch (error) {
     console.error("Failed to processing result:", error);

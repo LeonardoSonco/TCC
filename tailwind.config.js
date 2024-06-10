@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         "gray": "#A7A7A7",
         "strong_gray" : "#5B5B5B",
-        "light_gray": "#D9D9D9",
+        "light_gray": "#F6F8FA",
         "black_button" : "#001A1A",
       },
       boxShadow:{

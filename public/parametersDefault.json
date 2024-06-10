@@ -1,0 +1,20 @@
+{
+    "activation_function": "LeakyReLU",
+    "batch_size": "32",
+    "data_type": "float32",
+    "dropout_decay_rate_d": "0.4",
+    "dropout_decay_rate_g": "0.2",
+    "initializer_deviation": "0.02",
+    "initializer_mean": "0.0",
+    "k_fold": "5",
+    "latent_dimension": "128",
+    "latent_mean_distribution": "0.0",
+    "latent_stander_deviation": "1.0",
+    "num_samples_class_benign": "2000",
+    "num_samples_class_malware": "2000",
+    "path_confusion_matrix": "confusion_matrix",
+    "path_curve_loss": "training_curve",
+    "save_models": "true",
+    "training_algorithm": "Adam"
+  }
+  

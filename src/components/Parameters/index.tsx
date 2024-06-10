@@ -23,7 +23,6 @@ const Parameters = ({ setListCampaignsList }: any) => {
     useState<Campaign>(defaultCampaign);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileSelected, setFileSelected] = useState<boolean>(false);
-
   const [inputErrors, setInputErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -35,6 +34,7 @@ const Parameters = ({ setListCampaignsList }: any) => {
             "User-agent": "learning app",
           },
         });
+
         const data: Campaigns = await response.json();
         setCampaigns(data);
       } catch (error) {
@@ -52,9 +52,18 @@ const Parameters = ({ setListCampaignsList }: any) => {
       setCampaignSelected(event.target.value);
 
       if (event.target.value != "customize" && campaigns) {
-        setCustomParametersCampaing(campaigns[event.target.value]);
+       
+       // antes de modificar o parametro verifica se nao dataset pré selecionado
+        setCustomParametersCampaing((prevState) => ({
+          ...campaigns[event.target.value],
+          datasetSelected: prevState.datasetSelected,
+        }));
       } else if (event.target.value === "customize" && campaigns) {
-        setCustomParametersCampaing(defaultCampaign);
+       
+        setCustomParametersCampaing((prevState) => ({
+          ...campaigns[event.target.value],
+          datasetSelected: prevState.datasetSelected,
+        }));
       }
     }
   };
@@ -86,6 +95,7 @@ const Parameters = ({ setListCampaignsList }: any) => {
       setListCampaignsList((prevList: any) => [...prevList, campaignList]);
 
       setCustomParametersCampaing(defaultCampaign);
+
       setCampaignSelected("");
       if (fileInputRef.current) {
         fileInputRef.current.value = "";

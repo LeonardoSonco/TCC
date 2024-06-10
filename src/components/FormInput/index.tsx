@@ -21,6 +21,7 @@ const FormInput: React.FC<NumericTypeParametersProps> = ({
   };
 
   const decreaseValue = useCallback(() => {
+
     if (parseInt(value) > 0) {
       const newValue = parseInt(value) - 1;
       onChange(newValue);
@@ -41,7 +42,7 @@ const FormInput: React.FC<NumericTypeParametersProps> = ({
         <div
           className={`flex items-center border-2 border-gray rounded-md w-32 justify-between `}
         >
-          <button onClick={decreaseValue} className="px-1">
+          <button type="button" onClick={decreaseValue} className="px-1">
             <Minus size={14} />
           </button>
           <input
@@ -51,8 +52,8 @@ const FormInput: React.FC<NumericTypeParametersProps> = ({
             onChange={(e) => handleInputChange(parseInt(e.target.value))}
             className="border-none w-14 h-6 text-center"
           />
-          <button onClick={increaseValue} className={`px-1`}>
-            <Plus size={14} />
+          <button type="button" onClick={increaseValue} className={`px-1`}>
+            <Plus  size={14} />
           </button>
         </div>
       </div>

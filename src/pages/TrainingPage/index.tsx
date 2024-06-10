@@ -9,7 +9,7 @@ import Parameters from "../../components/Parameters";
 import PredefinitionCampaing from "../../components/PredefinitionCampaing";
 import ProcessStatus from "../../components/ProcessStatus";
 
-import { processingStatusToId, registerUser } from "../../services/services";
+import { processingStatus, registerUser } from "../../services/services";
 
 import { ListCampaing } from "../../types";
 
@@ -23,6 +23,7 @@ const TrainingPage: React.FC = () => {
     const userId = localStorage.getItem("userId");
     if (userId) {
       setCurrentUserId(userId);
+      handleReloadProcessStatus();
     } else {
       console.log(currentUserId);
     }
@@ -38,9 +39,10 @@ const TrainingPage: React.FC = () => {
 
     setTimeout(async () => {
       setIsSpinning(false);
-      setProcessStatus(await processingStatusToId());
+      setProcessStatus(await processingStatus());
     }, 1000);
   };
+
 
   return (
     <>
