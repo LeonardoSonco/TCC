@@ -9,9 +9,9 @@ import Parameters from "../../components/Parameters";
 import PredefinitionCampaing from "../../components/PredefinitionCampaing";
 import ProcessStatus from "../../components/ProcessStatus";
 
-import { processingStatus, registerUser } from "../../services/services";
-
 import { ListCampaing } from "../../types";
+import { registerUser } from "../../services/registerUser";
+import { getProcessingStatus } from "../../services/getProcessingStatus";
 
 const TrainingPage: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>("");
@@ -39,7 +39,7 @@ const TrainingPage: React.FC = () => {
 
     setTimeout(async () => {
       setIsSpinning(false);
-      setProcessStatus(await processingStatus());
+      setProcessStatus(await getProcessingStatus());
     }, 1000);
   };
 

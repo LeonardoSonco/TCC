@@ -33,7 +33,7 @@ export default function CganPage() {
                   Diagrama da arquitetura da CGAN de alto nível
                 </h4>
 
-                <img src={cganArq} alt="" className="w-11/12" />
+                <img src={cganArq} alt="" className="w-11/12 " />
                 <p className="font-medium">GAN condicional</p>
               </div>
               <div className="my-8">

@@ -1,7 +1,7 @@
 import { Eye, EyeOff, Trash } from "react-feather";
 import { Campaign, ListCampaing } from "../../types";
 import { useState } from "react";
-import { uploadDataset } from "../../services/services";
+import { postUploadDataset } from "../../services/postUploadDataset";
 
 const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
   const [visibleCampaings, setVisibleCampaings] = useState<{
@@ -45,16 +45,16 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
   };
   const handleUploadDatasets = async () => {
     for (let index = 0; index < listCampaings.length; index++) {
-      await uploadDataset(listCampaings[index], index);
+      await postUploadDataset(listCampaings[index], index);
     }
-    setListCampaigns([])
+    setListCampaigns([]);
   };
   return (
     <>
       {listCampaings.length > 0 ? (
         <>
           {listCampaings.map((value: any, index: number) => (
-            <div key={index} className="border-2 mb-2 mx-4 p-2">
+            <div key={index} className="border-2 mb-2 mx-4 p-2 ">
               <div className=" flex justify-between">
                 <h2>{value.name}</h2>
 
@@ -63,19 +63,19 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
                     <Eye
                       size={20}
                       onClick={() => toggleVisibility(index)}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:text-green-700 hover:scale-105  transition-all"
                     ></Eye>
                   ) : (
                     <EyeOff
                       size={20}
                       onClick={() => toggleVisibility(index)}
-                      className="cursor-pointer"
+                      className="cursor-pointer hover:text-green-700 hover:scale-105  transition-all"
                     ></EyeOff>
                   )}
                   <Trash
                     size={20}
                     onClick={() => handleRemoveCampaing(index)}
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:text-red-600 hover:scale-105  transition-all"
                   />
                 </div>
               </div>
@@ -87,7 +87,7 @@ const PredefinitionCampaing = ({ listCampaings, setListCampaigns }: any) => {
           <div className="text-center mt-10">
             <button
               onClick={handleUploadDatasets}
-              className="border-2 bg-black_button text-white w-10/12 py-1 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg"
+              className="border-2 bg-black_button text-white w-10/12 py-1 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg hover:scale-101 hover:bg-blue-900  transition-all"
             >
               Iniciar
             </button>

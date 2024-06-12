@@ -18,8 +18,10 @@ const Root = () => {
         ></Route>
         <Route path="/about/autodroid" element={<AutoDroidPage />}></Route>
         <Route path="/training" element={<TrainingPage />}></Route>
-        
-        <Route path="/training/result/:name/:id/" element={<ResultPage />}></Route>
+        <Route
+          path="/training/result/:name/:id/"
+          element={<ResultPage />}
+        ></Route>
       </Routes>
     </>
   );

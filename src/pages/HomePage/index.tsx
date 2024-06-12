@@ -3,7 +3,7 @@ import github from "../../assets/img/GitHub.svg";
 
 import style from "../../assets/css/size.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../../services/services";
+import { registerUser } from "../../services/registerUser";
 
 const HomePage = () => {
   const navigate = useNavigate();

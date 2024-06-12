@@ -221,7 +221,7 @@ const Parameters = ({ setListCampaignsList }: any) => {
                 <button
                   type="button"
                   onClick={handleAddCampaign}
-                  className="border-2 bg-black_button text-white w-72 py-2 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg"
+                  className="border-2 bg-black_button text-white w-72 py-2 text-xl font-bold rounded-2xl max-xs:w-3/4 max-xs:text-lg hover:scale-101 hover:bg-blue-900 transition-all"
                 >
                   Adicionar
                 </button>

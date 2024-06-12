@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import PrivateLayout from "../../layouts/Private";
-import { processingShowResult } from "../../services/services";
+
 
 import PdfDocument from "../../components/PdfViewerImage";
 
@@ -11,6 +11,9 @@ import { Box, CircularProgress } from "@mui/material";
 import { ParametersDefault, ProcessingResultType } from "../../types";
 
 import Carousel from "../../components/Carousel";
+import ModalLoading from "../../components/ModalLoading";
+import { processingShowResult } from "../../services/getProcessingShowResult";
+import { getDownloadDataset } from "../../services/getDownloadDataset";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
@@ -24,10 +27,12 @@ interface Parameters {
 const ResultPage = () => {
   const processingId = useParams<{ name: string; id: string }>();
   const [files, setFiles] = useState<ProcessingResultType>();
+  const [fileDonwload, setFileDonwload] = useState("");
   const [parameters, setParameters] = useState<Parameters>();
   const [parametersDefault, setParametersDefault] =
     useState<ParametersDefault>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingError, setIsLoadingError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,16 +56,20 @@ const ResultPage = () => {
     fetchData();
   }, []);
 
+
+
   useEffect(() => {
     const handleFile = async () => {
       setIsLoading(true);
 
       if (processingId.id) {
         const result = await processingShowResult(processingId.id);
-
+        const fileDonwload = await getDownloadDataset(processingId.id);
+     
         if (result && result.imagesObject) {
           setFiles(result.imagesObject);
           setParameters(result.selectedResultParameters);
+          setFileDonwload(fileDonwload.fileForDownload);
           setIsLoading(false);
         }
       }
@@ -71,7 +80,6 @@ const ResultPage = () => {
     handleFile();
   }, [processingId]);
 
- 
   return (
     <PrivateLayout>
       {isLoading ? (
@@ -88,18 +96,24 @@ const ResultPage = () => {
                 {" "}
                 <ArrowLeftCircle
                   size={35}
-                  onClick={() => window.history.back()}
-                  className="cursor-pointer"
+                  onClick={() => {
+                    window.history.back();
+                  }}
+                  className="cursor-pointer hover:scale-105 hover:text-blue-400 hover:transition-all"
                 />
                 <h2 className="text-xl font-semibold">
                   Resultado do treinamento: {processingId.name}
                 </h2>
               </div>
 
-              <div className="flex gap-4 items-center cursor-pointer mt-2">
+              <a
+                className="flex gap-4 items-center cursor-pointer mt-2 hover:scale-101 hover:text-blue-400 hover:transition-all"
+                download={`dataset_${processingId.name}.csv`}
+                href={fileDonwload}
+              >
                 <span>Baixar dataset</span>
                 <Download></Download>
-              </div>
+              </a>
             </div>
 
             <div className="flex flex-col w-full max-w-4xl mx-auto max-sm++:w-11/12">
@@ -110,11 +124,11 @@ const ResultPage = () => {
 
               <div className="bg-light_gray px-5 py-2 rounded-xl">
                 <h4 className="font-medium text-lg">Parametros customizados</h4>
-                <div className="px-4">
+                <div className="px-4" key={"Parametros_customizados"}>
                   {parameters &&
                     Object.entries(parameters).map(([key, value]) => (
                       <>
-                        <p key={key} className="py-1 font-light">
+                        <p key={`${key}-${value}`} className="py-1 font-light">
                           <span className="font-normal">{key}:</span> {value}
                         </p>
                       </>
@@ -122,11 +136,14 @@ const ResultPage = () => {
                 </div>
 
                 <h4 className="mt-5 font-medium text-lg">Parametros fixos</h4>
-                <div className="grid grid-cols-2 px-4 max-sm:flex max-sm:flex-col">
+                <div
+                  className="grid grid-cols-2 px-4 max-sm:flex max-sm:flex-col"
+                  key={"Parametros_fixos"}
+                >
                   {parametersDefault &&
                     Object.entries(parametersDefault).map(([key, value]) => (
                       <>
-                        <p key={key} className="py-1 font-light">
+                        <p key={`${key}-${value}`} className="py-1 font-light">
                           <span className="font-normal">{key}:</span> {value}
                         </p>
                       </>
@@ -205,3 +222,10 @@ const ResultPage = () => {
 };
 
 export default ResultPage;
+/*
+ <div className="flex justify-center">
+          <Box sx={{ display: "flex", height: "80vh", alignItems: "center" }}>
+            <CircularProgress />
+          </Box>
+        </div>
+ */
