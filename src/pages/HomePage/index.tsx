@@ -26,7 +26,7 @@ const HomePage = () => {
 
           <div className="text-white text-sm flex gap-5 max-sm:flex-col">
             <button className="bg-black_button rounded-3xl py-2 w-48">
-              <Link to="/about/cgans">Entenda o MalwareDatalab</Link>
+              <Link to="/about/cgans">Entenda as Ferramentas</Link>
             </button>
             <button
               className="bg-black_button rounded-3xl py-2 w-48"

@@ -43,7 +43,6 @@ const TrainingPage: React.FC = () => {
     }, 1000);
   };
 
-
   return (
     <>
       {localStorage.getItem("userId") ? (
@@ -87,35 +86,38 @@ const TrainingPage: React.FC = () => {
               </div>
             </div>
           </section>
-
-          <section className="shadow-shadowBox rounded-lg max-w-7xl mx-auto pb-4 max-sm+:mx-5">
-            <div className="flex justify-between pt-8 pb-4 mx-12 ">
-              <h3 className="font-bold text-xl">Processos</h3>
-              <RefreshCw
-                onClick={handleReloadProcessStatus}
-                className={`cursor-pointer ${isSpinning ? "animate-spin" : ""}`}
-              ></RefreshCw>
-            </div>
-
-            {processStatus ? (
-              <>
-                {Object.entries(processStatus).map(([name, result]: any) => {
-                  return result.map((process: any, index: number) => {
-                    return (
-                      <ProcessStatus
-                        key={`${name}-${index}`}
-                        name={name}
-                        processStatus={process}
-                      />
-                    );
-                  });
-                })}
-              </>
-            ) : (
-              <div className="flex justify-center mb-5 ">
-                <p className="font-semibold">Sem processos no momento! </p>
+          <section className=" max-w-7xl mx-auto">
+            <div className="shadow-shadowBox rounded-lg mx-10 pb-4 max-sm+:mx-5">
+              <div className="flex justify-between pt-8 pb-4 mx-12 ">
+                <h3 className="font-bold text-xl">Processos</h3>
+                <RefreshCw
+                  onClick={handleReloadProcessStatus}
+                  className={`cursor-pointer ${
+                    isSpinning ? "animate-spin" : ""
+                  }`}
+                ></RefreshCw>
               </div>
-            )}
+
+              {processStatus ? (
+                <>
+                  {Object.entries(processStatus).map(([name, result]: any) => {
+                    return result.map((process: any, index: number) => {
+                      return (
+                        <ProcessStatus
+                          key={`${name}-${index}`}
+                          name={name}
+                          processStatus={process}
+                        />
+                      );
+                    });
+                  })}
+                </>
+              ) : (
+                <div className="flex justify-center mb-5 ">
+                  <p className="font-semibold">Sem processos no momento! </p>
+                </div>
+              )}
+            </div>
           </section>
         </PrivateLayout>
       ) : (
