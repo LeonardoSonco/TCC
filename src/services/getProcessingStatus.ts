@@ -43,6 +43,6 @@ export const getProcessingStatus = async () => {
       console.log("Nenhum ID de processo encontrado.");
     }
   } catch (error) {
-    console.error("Failed to process status:", error);
+    console.error("Falha ao buscar status do processo:", error);
   }
 };

@@ -33,6 +33,6 @@ export const postDatasetProcessing = async (
     processIds.push(teste);
     localStorage.setItem("processIds", JSON.stringify(processIds));
   } catch (error) {
-    console.error("Failed to processing dataset:", error);
+    console.error("Falha ao iniciar o processo:", error);
   }
 };

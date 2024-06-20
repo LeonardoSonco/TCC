@@ -50,6 +50,6 @@ export const processingShowResult = async (processingId: string) => {
     return { imagesObject, selectedResultParameters };
     //return urls;
   } catch (error) {
-    console.error("Failed to processing result:", error);
+    console.error("Falha em buscar o resultados:", error);
   }
 };

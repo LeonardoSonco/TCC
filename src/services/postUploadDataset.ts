@@ -41,7 +41,7 @@ export const postUploadDataset = async (campaingParameters: any, index: number) 
   
       localStorage.setItem("datasetIds", JSON.stringify(datasetIds));
     } catch (error) {
-      console.error("Failed to upload dataset:", error);
+      console.error("Falha ao enviar o dataset:", error);
     }
   };
   

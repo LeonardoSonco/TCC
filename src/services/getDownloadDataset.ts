@@ -17,6 +17,6 @@ export const getDownloadDataset = async (processingId: string) => {
     const filesCsvObject = Object.fromEntries(filesCsv);
     return filesCsvObject;
   } catch (error) {
-    console.log("Failed to download dataset:", error);
+    console.log("Falha em baixar o dataset:", error);
   }
 };

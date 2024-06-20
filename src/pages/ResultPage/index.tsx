@@ -123,7 +123,7 @@ const ResultPage = () => {
               </h3>
 
               <div className="bg-light_gray px-5 py-2 rounded-xl">
-                <h4 className="font-medium text-lg">Parametros customizados</h4>
+                <h4 className="font-medium text-lg">Parâmetros customizados</h4>
                 <div className="px-4" key={"Parametros_customizados"}>
                   {parameters &&
                     Object.entries(parameters).map(([key, value]) => (
@@ -135,7 +135,7 @@ const ResultPage = () => {
                     ))}
                 </div>
 
-                <h4 className="mt-5 font-medium text-lg">Parametros fixos</h4>
+                <h4 className="mt-5 font-medium text-lg">Parâmetros fixos</h4>
                 <div
                   className="grid grid-cols-2 px-4 max-sm:flex max-sm:flex-col"
                   key={"Parametros_fixos"}

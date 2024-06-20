@@ -9,6 +9,6 @@ export const getProcessingParametersToId = async (processingId: string) => {
       });
       return response.data.processing.params;
     } catch (error) {
-      console.error("Failed to process parameters:", error);
+      console.error("Falha ao buscar processo por ID:", error);
     }
   };
